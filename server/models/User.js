@@ -1,0 +1,32 @@
+const mongoose = require ("mongoose")
+const { stringify } = require("querystring")
+
+const userSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6
+    },
+    tours: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tour' 
+      }
+    ],
+  }, {
+    timestamps: true 
+  });
+
+module.exports = mongoose.model('User', userSchema)
