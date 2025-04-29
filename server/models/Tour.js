@@ -1,35 +1,31 @@
 const mongoose = require('mongoose');
 
-// יצירת הסכמה למסלולים
+// Creating the schema for tours
 const tourSchema = new mongoose.Schema({
-  id: {
-    type: mongoose.Schema.Types.ObjectId, // מזהה ייחודי אוטומטי
-    required: true,
-    auto: true // מזהה שנוצר אוטומטית
-  },
-  stations: {
-    type: [String], // מערך של תחנות לפי סדר
-    required: true
-  },
+  stations:[
+    {
+      type: mongoose.Schema.Types.ObjectId, // Reference to the TourStation schema
+      ref: 'TourStation' // Name of the model being referenced
+    }
+  ],
   estimatedDuration: {
-    type: Number, // משך זמן משוער (בדקות או שעות)
-    required: true
+    type: Number, // Estimated duration (in minutes or hours)
+    default: 60 // Default value is 60 if not provided
   },
   estimatedPrice: {
     type: {
-      min: Number, // מחיר מינימלי
-      max: Number  // מחיר מקסימלי
+      min: Number, // Minimum price
+      max: Number  // Maximum price
     },
-    required: true
   },
   tourStyle: {
-    type: String, // סגנון הסיור
-    enum: ['historical', 'cultural', 'adventure', 'nature', 'other'], // ערכים אפשריים
-    required: true
+    type: String, // Style of the tour
+    enum: ['historical', 'cultural', 'adventure', 'nature', 'other'], // Allowed values
+    default:"other"
   }
 });
 
-// יצירת מודל
+// Creating the model
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
