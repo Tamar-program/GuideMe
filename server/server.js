@@ -13,7 +13,9 @@ app.use(express.json())
 app.use(express.static("public"))
 app.use(cors())
 
-
+app.use("/tour", require("./routers/tourRouter"))
+app.use("/tourStation", require("./routers/tourStationRouter"))
+app.use("/user", require("./routers/userRouter"))
 
 app.get("/getser",(req,res) => {
 res.json("get")
