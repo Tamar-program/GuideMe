@@ -5,6 +5,7 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().lean().select('password')
     res.status(200).json(users)
+    console.log(req.user)
   }
   catch (error) {
     console.error(error)
