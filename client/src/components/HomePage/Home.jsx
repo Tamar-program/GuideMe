@@ -1,3 +1,4 @@
+ import Login from "./Login";
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
     gridTemplateRows: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
@@ -43,7 +44,7 @@ const grid3Style = {
 
 const Home = () => {
     return (<>
-
+<Login ></Login>
         <div style={grid1Style}>
             <div style={grid2Style}>
                 <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
