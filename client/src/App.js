@@ -1,17 +1,20 @@
-
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; 
+import 'primereact/resources/primereact.min.css';                
+import 'primeicons/primeicons.css';                          
 import './App.css';
-import Home from './components/Home';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import MenuBar   from './components/MenuBar';
+import TourComposer from './components/HomePage/TourComposer';
+import Home from './components/HomePage/Home';
 
 
 function App() {
   return (
     <div className="App">
       <Router>
-  <MenuBar/>
             <Routes>
                <Route path="/" element={<Home/>} /> 
+               <Route path="/TourComposer" element={<TourComposer/>} /> 
+               
             </Routes>
         </Router>
 
