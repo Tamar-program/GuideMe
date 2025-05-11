@@ -47,6 +47,8 @@ const tourStationSchema = new mongoose.Schema({
         type: Boolean, // רמת נגישות (נגיש/לא נגיש)
         default: false
     }
+}, {
+    timestamps: true
 });
 
 // יצירת מודל
