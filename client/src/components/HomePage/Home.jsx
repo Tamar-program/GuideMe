@@ -25,7 +25,7 @@ const grid2Style = {
     , color: 'white'
 };
 
-const grid3Style = {
+const grid3Style = {                                                                                                                   
     // background: 'lightblue', /* צבע רקע לכל תא */
     // textAlign: 'center', /* יישור טקסט */
     // display: 'flex',

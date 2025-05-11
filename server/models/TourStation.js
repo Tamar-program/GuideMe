@@ -31,18 +31,11 @@ const tourStationSchema = new mongoose.Schema({
         required: true,
         enum: ['history', 'culinary', 'culture', 'nature', 'art', 'other']
     },
-    address: {
-        type: String, // כתובת
-        required: true,
-        trim: true
-    },
-    gpsLocation: {
-        type: {
-            latitude: { type: Number, required: true }, // קו רוחב
-            longitude: { type: Number, required: true } // קו אורך
-        },
-        required: true
-    },
+    addres:{
+        type: mongoose.Schema.Types.ObjectId,
+         ref: 'Address'
+      },
+   
     accessibility: {
         type: Boolean, // רמת נגישות (נגיש/לא נגיש)
         default: false

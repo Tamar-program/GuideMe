@@ -17,6 +17,8 @@ app.use("/api/auth", require("./routers/authRouter"))
 app.use("/tour", require("./routers/tourRouter"))
 app.use("/tourStation", require("./routers/tourStationRouter"))
 app.use("/user", require("./routers/userRouter"))
+app.use("/user", require("./routers/addressRouter"))
+
 
 
 app.get("/getser",(req,res) => {

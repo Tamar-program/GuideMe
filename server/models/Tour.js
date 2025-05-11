@@ -22,7 +22,8 @@ const tourSchema = new mongoose.Schema({
     type: String, // Style of the tour
     enum: ['historical', 'cultural', 'adventure', 'nature', 'other'], // Allowed values
     default:"other"
-  }
+  },
+  
 });
 
 // Creating the model
