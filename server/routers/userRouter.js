@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const verifyJWT = require("../middleware/verifyJWT")
+const verifyJWTManager =require("../middleware/verifyJWTManager")
 
 const userController = require("../controllers/userController")
 
