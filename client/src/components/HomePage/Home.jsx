@@ -1,5 +1,27 @@
 import TourComposer from "./TourComposer";
+import Login from "./Login";
 
+const Home = () => {
+    return (<>
+        <Login ></Login>
+        <div style={grid1Style}>
+            <div style={grid2Style}>
+                <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
+                    תוכלו להרכיב מסלול סיור מותאם אישית בקלות ובמהירות. האתר מאפשר לכם לבחור את האתרים,
+                    האטרקציות והמסלולים שמתאימים להעדפותיכם האישיות,
+                    תוך התחשבות בזמן שברשותכם ובתחומי העניין שלכם.
+                </div>
+            </div>
+            <div style={grid3Style}>
+                <div style={{ textalign: " center", gridColumn: '2 / 3' }}>בין אם אתם מתעניינים בהיסטוריה, אמנות, דתות או פשוט רוצים לחוות את האווירה הייחודית של העיר,
+                    הממשק הידידותי שלנו ידריך אתכם צעד אחר צעד בבחירת התחנות המושלמות לסיור שלכם. ירושלים מחכה לכם – התחילו את המסע האישי שלכם עוד היום!
+                </div>
+            </div>
+            <div style={grid2Style}><div style={{ textalign: " center", gridColumn: '2 / 3' }}>❤💬☎🤙</div></div>
+        </div>
+        <TourComposer />
+    </>)
+}
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
     gridTemplateRows: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
@@ -11,11 +33,6 @@ const grid1Style = {
 };
 
 const grid2Style = {
-    // background: 'lightblue', /* צבע רקע לכל תא */
-    // textAlign: 'center', /* יישור טקסט */
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     display: 'grid',         // הגדרת גריד
     gridTemplateColumns: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
     height: '55vh',         // הגדרת גובה העמוד כולו
@@ -27,11 +44,6 @@ const grid2Style = {
 };
 
 const grid3Style = {
-    // background: 'lightblue', /* צבע רקע לכל תא */
-    // textAlign: 'center', /* יישור טקסט */
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     display: 'grid',         // הגדרת גריד
     gridTemplateColumns: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
     height: '40vh',         // הגדרת גובה העמוד כולו
@@ -42,38 +54,5 @@ const grid3Style = {
     , color: '#daa520'
 };
 
-
-const Home = () => {
-    return (<>
-
-        <div style={grid1Style}>
-            <div style={grid2Style}>
-                <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
-                    תוכלו להרכיב מסלול סיור מותאם אישית בקלות ובמהירות. האתר מאפשר לכם לבחור את האתרים,
-                    האטרקציות והמסלולים שמתאימים להעדפותיכם האישיות,
-                    תוך התחשבות בזמן שברשותכם ובתחומי העניין שלכם.
-                </div>
-            </div>
-            <div style={grid3Style}>
-                <div style={{ textalign: " center", gridColumn: '2 / 3' }}>בין אם אתם מתעניינים בהיסטוריה, אמנות, דתות או פשוט רוצים לחוות את האווירה הייחודית של העיר,
-                הממשק הידידותי שלנו ידריך אתכם צעד אחר צעד בבחירת התחנות המושלמות לסיור שלכם. ירושלים מחכה לכם – התחילו את המסע האישי שלכם עוד היום!
-                </div>
-            </div>
-            <div style={grid2Style}><div style={{ textalign: " center", gridColumn: '2 / 3' }}>❤💬☎🤙</div></div>
-        </div>
-<TourComposer/>
-        {/* <div style={grid1Style}>
-  <div class={grid2Style}>1</div>
-  <div class={grid2Style}>2</div>
-  <div class={grid2Style}>3</div>
-  <div class={grid2Style}>4</div>
-  <div class={grid2Style}>5</div>
-  <div class={grid2Style}>6</div>
-</div> */}
-
-
-
-    </>)
-}
 
 export default Home;

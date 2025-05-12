@@ -19,6 +19,7 @@ app.use("/tour", require("./routers/tourRouter"))
 app.use("/tourStation", require("./routers/tourStationRouter"))
 app.use("/user", require("./routers/userRouter"))
 app.use("/userTours", require("./routers/userTourRouter"))
+app.use("/address", require("./routers/addressRouter"))
 
 
 app.get("/getser",(req,res) => {

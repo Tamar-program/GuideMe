@@ -18,7 +18,7 @@ const getTourById = async (req, res) => {
     try {
         const { id } = req.params;
         const tour = await Tour.findById(id);
-        if (!tFour) {
+        if (!tour) {
             return res.status(404).json({ error: 'Tour not found' });
         }
         res.status(200).json(tour);
