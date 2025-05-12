@@ -18,30 +18,29 @@ const Login = () => {
 
     return (
         <div className="card flex justify-content-center">
-            <Button className="login_main-button" label="Login" icon="pi pi-user" onClick={() => setVisible(true)} />
+            <Button  label="כניסה כמשתמש רשום" icon="pi pi-user" onClick={() => setVisible(true)} />
             <Dialog
-                className="login_dialog"
                 visible={visible}
                 modal
                 onHide={() => { if (!visible) return; setVisible(false); }}
                 content={({ hide }) => (
-                    <div className="main_div_dialog" >
+                    <div className="flex flex-column px-8 py-5 gap-4" style={{ borderRadius: '12px', backgroundImage: 'radial-gradient(circle at left top, var(--primary-400), var(--primary-700))' }}>
 
-                        <div className="input_div">
+                        <div className="inline-flex flex-column gap-2">
                             <label htmlFor="email" className="text-primary-50 font-semibold">
                                 email
                             </label>
                             <InputText id="email" label="Email" className="bg-white-alpha-20 border-none p-3 text-primary-50" onChange={(e) => { setEmail(e.target.value) }}></InputText>
                         </div>
-                        <div className="input_div">
+                        <div className="inline-flex flex-column gap-2">
                             <label htmlFor="password" className="text-primary-50 font-semibold">
                                 password
                             </label>
                             <InputText id="password" label="Password" className="bg-white-alpha-20 border-none p-3 text-primary-50" type="password" onChange={(e) => { setPassword(e.target.value) }}></InputText>
                         </div>
-                        <div className="button_div">
-                            <Button label="Sign-In" onClick={(e) => { Log_In(e); hide(e) }} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
-                            <Button label="Cancel" onClick={(e) => hide(e)} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
+                        <div className="flex align-items-center gap-2">
+                            <Button label="כניסה" onClick={(e) => { Log_In(e); hide(e) }} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
+                            <Button label="ביטול" onClick={(e) => hide(e)} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"></Button>
                         </div>
                     </div>
                 )}

@@ -1,4 +1,11 @@
- import Login from "./Login";
+
+import Login from "./Login";
+import MenuBar from "./MenuBar";
+
+
+import Register from "./Register";
+
+
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
     gridTemplateRows: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
@@ -25,7 +32,7 @@ const grid2Style = {
     , color: 'white'
 };
 
-const grid3Style = {                                                                                                                   
+const grid3Style = {
     // background: 'lightblue', /* צבע רקע לכל תא */
     // textAlign: 'center', /* יישור טקסט */
     // display: 'flex',
@@ -44,7 +51,9 @@ const grid3Style = {
 
 const Home = () => {
     return (<>
-<Login ></Login>
+<MenuBar/>
+        <Login ></Login>
+        <Register></Register>
         <div style={grid1Style}>
             <div style={grid2Style}>
                 <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
@@ -55,12 +64,12 @@ const Home = () => {
             </div>
             <div style={grid3Style}>
                 <div style={{ textalign: " center", gridColumn: '2 / 3' }}>בין אם אתם מתעניינים בהיסטוריה, אמנות, דתות או פשוט רוצים לחוות את האווירה הייחודית של העיר,
-                הממשק הידידותי שלנו ידריך אתכם צעד אחר צעד בבחירת התחנות המושלמות לסיור שלכם. ירושלים מחכה לכם – התחילו את המסע האישי שלכם עוד היום!
+                    הממשק הידידותי שלנו ידריך אתכם צעד אחר צעד בבחירת התחנות המושלמות לסיור שלכם. ירושלים מחכה לכם – התחילו את המסע האישי שלכם עוד היום!
                 </div>
             </div>
             <div style={grid2Style}><div style={{ textalign: " center", gridColumn: '2 / 3' }}>❤💬☎🤙</div></div>
         </div>
-
+       
         {/* <div style={grid1Style}>
   <div class={grid2Style}>1</div>
   <div class={grid2Style}>2</div>
