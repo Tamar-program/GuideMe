@@ -19,13 +19,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true,
       minlength: 6
-    },
-    tours: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tour' 
-      }
-    ],
+    }
   }, {
     timestamps: true 
   });
