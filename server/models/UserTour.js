@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const { stringify } = require("querystring")
 
-const userToursSchema = new mongoose.Schema({
+const userTourSchema = new mongoose.Schema({
     userId:
     {
         type: mongoose.Schema.Types.ObjectId,
@@ -16,4 +16,4 @@ const userToursSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('UserTours', userToursSchema)
+module.exports = mongoose.model('UserTour', userTourSchema)

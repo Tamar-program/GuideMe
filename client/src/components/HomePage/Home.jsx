@@ -1,3 +1,5 @@
+import TourComposer from "./TourComposer";
+
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
     gridTemplateRows: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
@@ -59,7 +61,7 @@ const Home = () => {
             </div>
             <div style={grid2Style}><div style={{ textalign: " center", gridColumn: '2 / 3' }}>❤💬☎🤙</div></div>
         </div>
-
+<TourComposer/>
         {/* <div style={grid1Style}>
   <div class={grid2Style}>1</div>
   <div class={grid2Style}>2</div>
