@@ -22,6 +22,14 @@ const Home = () => {
         <TourComposer />
     </>)
 }
+
+import Login from "./Login";
+import MenuBar from "./MenuBar";
+
+
+import Register from "./Register";
+
+
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
     gridTemplateRows: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
