@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Creating the schema for tours
 const tourSchema = new mongoose.Schema({
-  stations:[
+  stations: [
     {
       type: mongoose.Schema.Types.ObjectId, // Reference to the TourStation schema
       ref: 'TourStation' // Name of the model being referenced
@@ -19,11 +19,12 @@ const tourSchema = new mongoose.Schema({
     },
   },
   tourStyle: {
-    type: String, // Style of the tour
+    type: [String], // Style of the tour
     enum: ['historical', 'cultural', 'adventure', 'nature', 'other'], // Allowed values
-    default:"other"
-  },
-  
+    default: "other"
+  }
+}, {
+  timestamps: true
 });
 
 // Creating the model

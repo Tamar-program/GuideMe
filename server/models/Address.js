@@ -32,7 +32,6 @@ const addressSchema = new mongoose.Schema({
             latitude: { type: Number }, // קו רוחב
             longitude: { type: Number} // קו אורך
         },
-        // required: true
     },
 },{
     timestamps:true

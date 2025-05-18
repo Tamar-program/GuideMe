@@ -1,20 +1,19 @@
-
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; 
+import 'primereact/resources/primereact.min.css';                
+import 'primeicons/primeicons.css';                          
 import './App.css';
-import Home from './components/HomePage/Home';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
-import 'primereact/resources/themes/lara-light-indigo/theme.css'; // נושא (Theme)
-import 'primereact/resources/primereact.min.css';                // סגנונות PrimeReact
-import 'primeicons/primeicons.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from './components/HomePage/Home';
+import MenuBar from './components/HomePage/MenuBar';
 
 
 function App() {
   return (
     <div className="App">
       <Router>
- 
             <Routes>
-               <Route path="/" element={<Home/>} /> 
+               <Route path="/" element={<Home/>} />                
             </Routes>
         </Router>
 

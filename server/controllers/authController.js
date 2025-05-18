@@ -21,6 +21,7 @@ const login = async (req, res) => {
         _id: foundUser._id,
         name: foundUser.name,
         email: foundUser.email
+
     }
     const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET)
 
@@ -28,7 +29,7 @@ const login = async (req, res) => {
 
 }
 const register = async (req, res) => {
-    const { name, password, email, tours } = req.body
+    const { name, password, email } = req.body
     if (!name || !email || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }

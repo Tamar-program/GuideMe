@@ -1,48 +1,60 @@
 const mongoose = require('mongoose');
 
-// יצירת הסכמה לתחנות
 const tourStationSchema = new mongoose.Schema({
-    idStation: {
-        type: mongoose.Schema.Types.ObjectId, // מזהה ייחודי אוטומטי
-        required: true,
-        auto: true
-    },
+    // idStation: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     auto: true
+    // },
     name: {
-        type: String, // שם התחנה
+        type: String,
         required: true,
         trim: true
     },
     shortDescription: {
-        type: String, // תיאור קצר
+        type: String,
         required: true,
         trim: true
     },
     historicalInfo: {
-        type: String, // מידע היסטורי
+        type: String,
         required: false,
         trim: true
     },
     images: {
-        type: [String], // מערך של קישורים לתמונות
+        type: [String],
         required: false
     },
     categories: {
-        type: [String], // קטגוריות (כמו היסטוריה, קולינריה)
+        type: [String],
         required: true,
         enum: ['history', 'culinary', 'culture', 'nature', 'art', 'other']
     },
-    addres:{
+    address: {
         type: mongoose.Schema.Types.ObjectId,
-         ref: 'Address'
-      },
-   
+        ref: 'Address',
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    duration: {
+        type: Number,
+        required: true,
+    },
     accessibility: {
-        type: Boolean, // רמת נגישות (נגיש/לא נגיש)
+        type: Boolean,
         default: false
-    }
+    },
+    publicTransportAvailable: {
+        type: Boolean,
+        default: true
+    },
+}, {
+    timestamps: true
 });
 
-// יצירת מודל
 const TourStation = mongoose.model('TourStation', tourStationSchema);
 
 module.exports = TourStation;
