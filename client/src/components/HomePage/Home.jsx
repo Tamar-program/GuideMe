@@ -23,12 +23,6 @@ const Home = () => {
     </>)
 }
 
-import Login from "./Login";
-import MenuBar from "./MenuBar";
-
-
-import Register from "./Register";
-
 
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
