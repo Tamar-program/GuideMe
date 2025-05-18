@@ -18,11 +18,10 @@ const getStationById = async (req, res) => {
     try {
         const { id } = req.params;
         if (!id) {
-            return res.status(400).json({ error: 'id is required' });
+            return res.status(400).json({ error: 'Id is required' });
         }
-
         const station = await TourStation.findById(id);
-        console.log(station + "😊")
+        console.log(station)
         if (!station) {
             return res.status(404).json({ error: 'Station not found' });
         }
@@ -35,16 +34,12 @@ const getStationById = async (req, res) => {
 // Function to create a new station
 const createStation = async (req, res) => {
     try {
-        const { name, shortDescription, categories, address, gpsLocation } = req.body;
+        const { name, shortDescription, historicalInfo, images, categories, address, gpsLocation, price, duration, accessibility, publicTransportAvailable } = req.body;
+        console.log(req.body);
 
-        // Validation for required fields
-        if (!name || !shortDescription || !categories || !address || !gpsLocation) {
-            return res.status(400).json({ error: 'Missing required fields: name, shortDescription, categories, address, and gpsLocation are required.' });
-        }
-
-        // Validate GPS location
-        if (!gpsLocation.latitude || !gpsLocation.longitude) {
-            return res.status(400).json({ error: 'GPS location must include both latitude and longitude.' });
+        if (!name || !shortDescription || !categories || !address || price === undefined ||
+            duration === undefined) {
+            return res.status(400).json({ error: 'Missing required fields: name, shortDescription, categories, address, price, and  duration are required.' });
         }
 
         // Validate categories
@@ -57,8 +52,10 @@ const createStation = async (req, res) => {
 
         res.status(201).json(savedStation);
     } catch (error) {
-        res.status(500).json({ error: 'Error creating a new station' });
-    }
+    console.error('Error in createStation:', error);
+    res.status(500).json({ error: 'Error creating a new station' });
+}
+
 };
 
 // Function to update an existing station
@@ -66,7 +63,7 @@ const updateStation = async (req, res) => {
     try {
         const { id } = req.params;
         if (!id) {
-            return res.status(400).json({ error: 'id is required' });
+            return res.status(400).json({ error: 'Id is required' });
         }
         const updatedStation = await TourStation.findByIdAndUpdate(id, req.body, {
             new: true,
@@ -87,7 +84,7 @@ const deleteStation = async (req, res) => {
         const { id } = req.params;
         if (!id) {
             return res.status(400).json({ error: 'id is required' });
-        }   
+        }
         const deletedStation = await TourStation.findByIdAndDelete(id);
         if (!deletedStation) {
             return res.status(404).json({ error: 'Station not found' });

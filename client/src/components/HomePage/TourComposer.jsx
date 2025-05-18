@@ -5,8 +5,8 @@ import { InputText } from "primereact/inputtext";
 import { Slider } from "primereact/slider";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
-import './TourComposer.css'; // ייבוא קובץ ה-CSS
-
+import axios from 'axios';
+import './TourComposer.css';
 const TourComposer = () => {
     const [visible, setVisible] = useState(false);
     const [duration, setDuration] = useState(0.25);
@@ -16,13 +16,34 @@ const TourComposer = () => {
     const [publicTransport, setPublicTransport] = useState(false);
 
     const tourTypes = [
+        { label: 'הכל', value: 'all' },
         { label: 'היסטורי', value: 'historical' },
         { label: 'תרבותי', value: 'cultural' },
         { label: 'הרפתקאות', value: 'adventure' },
         { label: 'טבע', value: 'nature' },
-        { label: 'אחר', value: 'other' }
+        { label: 'אחר', value: 'other' },
+
     ];
 
+    const searchTours = async () => {
+        try {
+        const res = await axios.get("http://localhost:1555/photo")
+
+            const response = await axios.post(`http://localhost:${process.env.PORT}/tour/search`, {
+                budget,
+                accessible,
+                publicTransport,
+                tourType,
+                duration
+            });
+
+            console.log('תוצאות חיפוש:', response.data); // כאן אפשר להחליף לתצוגה ב-UI
+
+            setVisible(false); // סגור את הדיאלוג
+        } catch (error) {
+            console.error('שגיאה בחיפוש סיורים:', error);
+        }
+    };
     return (
         <div className="tour-composer">
             <Button
@@ -72,7 +93,7 @@ const TourComposer = () => {
                         <label htmlFor="publicTransport">תחבורה ציבורית בלבד</label>
                     </div>
                     <div className="form-actions">
-                        <Button label="מצא סיור" className="custom-submit-button" onClick={() => setVisible(false)} />
+                        <Button label="מצא סיור" className="custom-submit-button" onClick={searchTours} />
                     </div>
                 </div>
             </Dialog>
