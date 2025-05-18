@@ -5,6 +5,7 @@ import './App.css';
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from './components/HomePage/Home';
+import MenuBar from './components/HomePage/MenuBar';
 
 
 function App() {

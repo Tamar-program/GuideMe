@@ -1,9 +1,11 @@
 import TourComposer from "./TourComposer";
 import Login from "./Login";
+import MenuBar from "./MenuBar";
 
 const Home = () => {
     return (<>
-        <Login ></Login>
+        <MenuBar/>
+        <Login />
         <div style={grid1Style}>
             <div style={grid2Style}>
                 <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
@@ -22,13 +24,6 @@ const Home = () => {
         <TourComposer />
     </>)
 }
-
-import Login from "./Login";
-import MenuBar from "./MenuBar";
-
-
-import Register from "./Register";
-
 
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
