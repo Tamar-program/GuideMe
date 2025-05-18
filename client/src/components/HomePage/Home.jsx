@@ -25,6 +25,7 @@ const Home = () => {
     </>)
 }
 
+
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
     gridTemplateRows: '1fr 1fr 1fr', // שלוש שורות בגובה שווה
