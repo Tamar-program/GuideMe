@@ -51,15 +51,14 @@ const TourComposer = () => {
 
     const searchTours = async () => {
         try {
-            const res = await axios.get("http://localhost:1555/photo")
-            const response = await axios.post(`http://localhost:${process.env.PORT}/tour/search`, {
+            // const res = await axios.get("http://localhost:1555/photo")
+            const response = await axios.post(`http://localhost:4321/api/tour/search`, {
                 budget,
                 accessible,
                 publicTransport,
                 tourType,
                 duration
             });
-
             console.log('תוצאות חיפוש:', response.data); // כאן אפשר להחליף לתצוגה ב-UI
             setVisible(false);
         } catch (error) {
@@ -130,62 +129,6 @@ const TourComposer = () => {
                         </div>
                     )}
                 ></Dialog>
-            </div>
-            <div className="tour-composer">
-                {/* <Button
-                    label="הרכב סיור"
-                    icon="pi pi-globe"
-                    className="custom-tour-button"
-                    onClick={() => setVisible(true)}
-                /> */}
-                <Dialog>
-
-                    {/* //     visible={visible}
-                //     modal
-                //     onHide={() => setVisible(false)}
-                //     className="custom-dialog"
-                // > */}
-                    {/* <div className="dialog-content">
-                        <h2 className="dialog-title">הרכב סיור</h2>
-                        <div className="form-field">
-                            <label htmlFor="duration">משך סיור</label>
-                            <Slider
-                                value={duration}
-                                onChange={(e) => setDuration(e.value)}
-                                min={0}
-                                max={10}
-                                step={0.25}
-                                className="custom-slider" />
-                            <p className="duration-text">
-                                <span>{Math.floor(duration)} שעות</span> ו-
-                                <span>{Math.round((duration % 1) * 60)} דקות</span>
-                            </p>
-                        </div>
-
-                        <div className="form-field">
-                            <label htmlFor="tourType">סוג סיור</label>
-                            <Dropdown value={tourType} options={tourTypes} onChange={(e) => setTourType(e.value)} placeholder="בחר סוג סיור" className="custom-dropdown" />
-                        </div>
-
-
-                        <div className="form-field">
-                            <label htmlFor="budget">מחיר (₪)</label>
-                            <Slider value={budget} onChange={(e) => setBudget(e.value)} min={0} max={500} step={10} className="custom-slider" />
-                            <p>{budget} ₪</p>
-                        </div>
-                        <div className="form-field checkbox-field">
-                            <Checkbox checked={accessible} onChange={(e) => setAccessible(e.checked)} />
-                            <label htmlFor="accessible">מונגש</label>
-                        </div>
-                        <div className="form-field checkbox-field">
-                            <Checkbox checked={publicTransport} onChange={(e) => setPublicTransport(e.checked)} />
-                            <label htmlFor="publicTransport">תחבורה ציבורית בלבד</label>
-                        </div>
-                        <div className="form-actions">
-                            <Button label="מצא סיור" className="custom-submit-button" onClick={searchTours} />
-                        </div>
-                    </div> */}
-                </Dialog>
             </div>
         </>
     );

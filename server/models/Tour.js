@@ -20,7 +20,7 @@ const tourSchema = new mongoose.Schema({
   },
   tourStyle: {
     type: [String], // Style of the tour
-    enum: ['historical', 'cultural', 'adventure', 'nature', 'other'], // Allowed values
+    enum: ['history', 'culinary', 'culture', 'nature', 'art', 'other'], // Allowed values
     default: "other"
   }
 }, {
