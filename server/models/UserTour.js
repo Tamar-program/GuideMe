@@ -10,7 +10,10 @@ const userTourSchema = new mongoose.Schema({
     tourId:
     {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tour'
+
+        ref: 'Tour',
+        require:true
+
     }
 }, {
     timestamps: true
