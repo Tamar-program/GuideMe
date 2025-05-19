@@ -13,15 +13,13 @@ const tourSchema = new mongoose.Schema({
     default: 60 // Default value is 60 if not provided
   },
   estimatedPrice: {
-    type: {
-      min: Number, // Minimum price
-      max: Number  // Maximum price
-    },
+    type: Number,
+    default: 25
   },
   tourStyle: {
     type: [String], // Style of the tour
     enum: ['history', 'culinary', 'culture', 'nature', 'art', 'other'], // Allowed values
-    default: "other"
+    default: ['other']
   }
 }, {
   timestamps: true

@@ -39,7 +39,7 @@ const createTour = async (req, res) => {
         const existingUser = await User.findOne({ _id });
         console.log(existingUser)
         if (existingUser) {
-          return res.status(400).json({ message: 'Tour already exists.' });
+            return res.status(400).json({ message: 'Tour already exists.' });
         }
         const newTour = await Tour.create({ stations, estimatedDuration, estimatedPrice, tourStyle });
         const result = await Tour.find()
@@ -81,20 +81,28 @@ const deleteTour = async (req, res) => {
     }
 };
 
-// Function to search for tours based on criteria
-function arraysEqual(a, b) {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-        if (a[i].toString() !== b[i].toString()) return false;
-    }
-    return true;
-}
-
 const searchTours = async (req, res) => {
     try {
+        // console.log("=== התחלת searchTours ===");
+
+        // // הצגת כל התחנות בבסיס הנתונים
+        // const allStations = await TourStation.find({});
+        // console.log('All stations:', allStations.map(s => ({
+        //     _id: s._id,
+        //     name: s.name,
+        //     categories: s.categories,
+        //     accessibility: s.accessibility,
+        //     publicTransportAvailable: s.publicTransportAvailable,
+        //     price: s.price,
+        //     duration: s.duration
+        // })));
+
+        // הדפסת גוף הבקשה
+        // console.log('Request body:', req.body);
+
         const {
-            maxDuration,
-            maxPrice,
+            maxDuration = 60,
+            maxPrice = 25,
             categories,
             accessibility,
             publicTransport
@@ -106,43 +114,66 @@ const searchTours = async (req, res) => {
             query.categories = { $in: categories };
         }
 
-        if (accessibility) {
+        if (accessibility === true) {
             query.accessibility = true;
         }
 
-        if (publicTransport) {
+        if (publicTransport === true) {
             query.publicTransportAvailable = true;
         }
 
+        // console.log('Built query for TourStation:', JSON.stringify(query, null, 2));
+
+        // מציאת תחנות מתאימות
         const matchedStations = await TourStation.find(query);
+        // console.log('Matched stations:', matchedStations.length, matchedStations.map(s => ({
+        //     _id: s._id,
+        //     name: s.name,
+        //     categories: s.categories,
+        //     accessibility: s.accessibility,
+        //     publicTransportAvailable: s.publicTransportAvailable,
+        //     price: s.price,
+        //     duration: s.duration
+        // })));
+
+        if (matchedStations.length === 0) {
+            console.warn("לא נמצאו תחנות מתאימות! בדוק את השאילתה או את הנתונים בבקשה.");
+        }
+
         const matchingTours = [];
         const totalStations = matchedStations.length;
-
-        // Set tourStyle to the full categories array or ['other'] if empty
         const tourStyleValue = categories && categories.length > 0 ? categories : ['other'];
 
         for (let i = 0; i < totalStations; i++) {
             let tourStations = [];
             let totalPrice = 0;
             let totalDuration = 0;
+            // console.log(`--- מתחיל מסלול חדש מ-index ${i} ---`);
 
             for (let j = i; j < totalStations; j++) {
                 const station = matchedStations[j];
 
+                // בדיקת תקינות נתוני התחנה
+                if (isNaN(station.price) || isNaN(station.duration)) {
+                    console.error('Invalid station data:', station);
+                    continue;
+                }
+
+                // console.log(`בודק תחנה: ${station.name} | מחיר: ${station.price} | משך: ${station.duration}`);
+                // console.log(`Totals before adding: totalPrice=${totalPrice}, totalDuration=${totalDuration}`);
+
                 if (totalPrice + station.price > maxPrice || totalDuration + station.duration > maxDuration) {
+                    // console.log(`יציאה מהלולאה - חריגה מתקציב/זמן! tourStations: ${tourStations}, totalPrice: ${totalPrice}, totalDuration: ${totalDuration}`);
                     if (tourStations.length > 1) {
                         const tour = new Tour({
                             stations: tourStations,
                             estimatedDuration: totalDuration,
-                            estimatedPrice: {
-                                min: totalPrice,
-                                max: totalPrice
-                            },
+                            estimatedPrice: totalPrice,
                             tourStyle: tourStyleValue
                         });
-
                         await tour.save();
                         matchingTours.push(tour);
+                        // console.log('Saved tour:', tour);
                     }
                     break;
                 }
@@ -150,26 +181,31 @@ const searchTours = async (req, res) => {
                 tourStations.push(station._id);
                 totalPrice += station.price;
                 totalDuration += station.duration;
+
+                // console.log('After adding: tourStations:', tourStations, 'totalPrice:', totalPrice, 'totalDuration:', totalDuration);
             }
 
             if (tourStations.length > 1) {
                 if (!matchingTours.some(t => arraysEqual(t.stations, tourStations))) {
+                    const validTourStyles = ['history', 'culinary', 'culture', 'nature', 'art', 'other'];
+                    const filteredTourStyleValue = tourStyleValue.filter(style => validTourStyles.includes(style));
                     const tour = new Tour({
                         stations: tourStations,
                         estimatedDuration: totalDuration,
-                        estimatedPrice: {
-                            min: totalPrice,
-                            max: totalPrice
-                        },
+                        estimatedPrice: totalPrice,
                         tourStyle: tourStyleValue
                     });
-
                     await tour.save();
                     matchingTours.push(tour);
+                    // console.log('Saved additional tour:', tour);
                 }
             }
         }
 
+        console.log('Final matchingTours count:', matchingTours.length);
+        if (matchingTours.length === 0) {
+            console.warn("לא נמצאו מסלולים תואמים! ייתכן שהנתונים לא מספקים או שהקריטריונים מצמצמים מדי.");
+        }
         res.status(200).json(matchingTours);
 
     } catch (error) {
@@ -178,4 +214,17 @@ const searchTours = async (req, res) => {
     }
 };
 
+// פונקציה להשוואת מערכי מזהי תחנות
+function arraysEqual(a, b) {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; ++i) {
+        // בדוק אם יש ל-objectId מתודת equals (Mongoose)
+        if (typeof a[i].equals === "function") {
+            if (!a[i].equals(b[i])) return false;
+        } else if (a[i] !== b[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 module.exports = { getAllTours, getTourById, createTour, updateTour, deleteTour, searchTours }

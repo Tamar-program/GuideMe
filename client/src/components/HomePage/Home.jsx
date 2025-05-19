@@ -8,6 +8,7 @@ const Home = () => {
         <MenuBar/>
         <Login />
         <Register />
+        <TourComposer />
         <div style={grid1Style}>
             <div style={grid2Style}>
                 <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
@@ -23,7 +24,6 @@ const Home = () => {
             </div>
             <div style={grid2Style}><div style={{ textalign: " center", gridColumn: '2 / 3' }}>❤💬☎🤙</div></div>
         </div>
-        <TourComposer />
     </>)
 }
 
