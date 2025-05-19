@@ -7,6 +7,8 @@ const Home = () => {
     return (<>
         <MenuBar/>
    
+        <Login />
+        <Register />
         <div style={grid1Style}>
             <div style={grid2Style}>
                 <div style={{ textalign: " center", gridColumn: '2 / 3' }}>האתר שלנו מציע חוויה ייחודית למטיילים המעוניינים לגלות את ירושלים בקצב שלהם. בעזרת הכלים המתקדמים שלנו,
@@ -25,6 +27,7 @@ const Home = () => {
         <TourComposer />
     </>)
 }
+
 
 const grid1Style = {
     display: 'grid',         // הגדרת גריד
@@ -60,7 +63,6 @@ const grid3Style = {
 
 
 
-// Removed duplicate Home component declaration
 
 
 export default Home;
