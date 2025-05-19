@@ -83,23 +83,6 @@ const deleteTour = async (req, res) => {
 
 const searchTours = async (req, res) => {
     try {
-        // console.log("=== התחלת searchTours ===");
-
-        // // הצגת כל התחנות בבסיס הנתונים
-        // const allStations = await TourStation.find({});
-        // console.log('All stations:', allStations.map(s => ({
-        //     _id: s._id,
-        //     name: s.name,
-        //     categories: s.categories,
-        //     accessibility: s.accessibility,
-        //     publicTransportAvailable: s.publicTransportAvailable,
-        //     price: s.price,
-        //     duration: s.duration
-        // })));
-
-        // הדפסת גוף הבקשה
-        // console.log('Request body:', req.body);
-
         const {
             maxDuration = 60,
             maxPrice = 25,
@@ -122,19 +105,7 @@ const searchTours = async (req, res) => {
             query.publicTransportAvailable = true;
         }
 
-        // console.log('Built query for TourStation:', JSON.stringify(query, null, 2));
-
-        // מציאת תחנות מתאימות
         const matchedStations = await TourStation.find(query);
-        // console.log('Matched stations:', matchedStations.length, matchedStations.map(s => ({
-        //     _id: s._id,
-        //     name: s.name,
-        //     categories: s.categories,
-        //     accessibility: s.accessibility,
-        //     publicTransportAvailable: s.publicTransportAvailable,
-        //     price: s.price,
-        //     duration: s.duration
-        // })));
 
         if (matchedStations.length === 0) {
             console.warn("לא נמצאו תחנות מתאימות! בדוק את השאילתה או את הנתונים בבקשה.");
@@ -148,22 +119,16 @@ const searchTours = async (req, res) => {
             let tourStations = [];
             let totalPrice = 0;
             let totalDuration = 0;
-            // console.log(`--- מתחיל מסלול חדש מ-index ${i} ---`);
 
             for (let j = i; j < totalStations; j++) {
                 const station = matchedStations[j];
 
-                // בדיקת תקינות נתוני התחנה
                 if (isNaN(station.price) || isNaN(station.duration)) {
                     console.error('Invalid station data:', station);
                     continue;
                 }
 
-                // console.log(`בודק תחנה: ${station.name} | מחיר: ${station.price} | משך: ${station.duration}`);
-                // console.log(`Totals before adding: totalPrice=${totalPrice}, totalDuration=${totalDuration}`);
-
                 if (totalPrice + station.price > maxPrice || totalDuration + station.duration > maxDuration) {
-                    // console.log(`יציאה מהלולאה - חריגה מתקציב/זמן! tourStations: ${tourStations}, totalPrice: ${totalPrice}, totalDuration: ${totalDuration}`);
                     if (tourStations.length > 1) {
                         const tour = new Tour({
                             stations: tourStations,
@@ -173,7 +138,6 @@ const searchTours = async (req, res) => {
                         });
                         await tour.save();
                         matchingTours.push(tour);
-                        // console.log('Saved tour:', tour);
                     }
                     break;
                 }
@@ -181,8 +145,6 @@ const searchTours = async (req, res) => {
                 tourStations.push(station._id);
                 totalPrice += station.price;
                 totalDuration += station.duration;
-
-                // console.log('After adding: tourStations:', tourStations, 'totalPrice:', totalPrice, 'totalDuration:', totalDuration);
             }
 
             if (tourStations.length > 1) {
@@ -197,7 +159,6 @@ const searchTours = async (req, res) => {
                     });
                     await tour.save();
                     matchingTours.push(tour);
-                    // console.log('Saved additional tour:', tour);
                 }
             }
         }
@@ -214,11 +175,9 @@ const searchTours = async (req, res) => {
     }
 };
 
-// פונקציה להשוואת מערכי מזהי תחנות
 function arraysEqual(a, b) {
     if (a.length !== b.length) return false;
     for (let i = 0; i < a.length; ++i) {
-        // בדוק אם יש ל-objectId מתודת equals (Mongoose)
         if (typeof a[i].equals === "function") {
             if (!a[i].equals(b[i])) return false;
         } else if (a[i] !== b[i]) {
