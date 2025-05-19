@@ -8,28 +8,29 @@ const MenuBar = () => {
     const navigate = useNavigate();
     const items = [
         {
-            label: 'Dashboard',
+            label: 'Home',
             icon: 'pi pi-home',
             command: () => {
-                navigate("/user")
+                navigate("/")
             }
         },
         {
-            label: 'Transactions',
-            icon: 'pi pi-chart-line',
+            icon: 'pi pi-map',
+            label: 'האתרים שלנו',
+            // icon: 'pi-globe',
             command: () => {
-                navigate("/Tour")
+                navigate("/TouristSites")
             }
         },
         {
-            label: 'Products',
-            icon: 'pi pi-list',
+            label: 'מסלולים מנצחים',
+            icon: 'pi pi-trophy',
             command: () => {
-
+                navigate("/WinningRoutes")
             }
         },
-        { label: 'Messages', 
-            icon: 'pi pi-inbox',
+        { label: 'מועדפים', 
+            icon: 'pi pi-heart',
             command: () => {
                
             } 
