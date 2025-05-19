@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A server for the GuideMe project",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
