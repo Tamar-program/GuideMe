@@ -1,43 +1,57 @@
 import { TabMenu } from 'primereact/tabmenu';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import Register from './Register';
+import Login from './Login';
 
 const MenuBar = () => {
     const navigate = useNavigate();
     const items = [
         {
-            label: 'Dashboard',
+            label: 'Home',
             icon: 'pi pi-home',
             command: () => {
-                navigate("/user")
+                navigate("/")
             }
         },
         {
-            label: 'Transactions',
-            icon: 'pi pi-chart-line',
+            icon: 'pi pi-map',
+            label: 'האתרים שלנו',
+            // icon: 'pi-globe',
             command: () => {
-                navigate("/Tour")
+                navigate("/TouristSites")
             }
         },
         {
-            label: 'Products',
-            icon: 'pi pi-list',
+            label: 'מסלולים מנצחים',
+            icon: 'pi pi-trophy',
             command: () => {
-
+                navigate("/WinningRoutes")
             }
         },
-        { label: 'Messages', 
-            icon: 'pi pi-inbox',
+        { label: 'מועדפים', 
+            icon: 'pi pi-heart',
             command: () => {
                
             } 
         }
     ];
 
-    return (
-        <div className="card">
-            <TabMenu model={items} />
+    const end = (
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', backgroundColor: 'lightgray', padding: '5px' }}>
+            <Register />
+            <Login />
         </div>
-    )
+    );
+
+    return (
+        <>
+        <div className="card">
+            <TabMenu model={items} end={end} />
+        </div></>
+    );
+
+    
 }
-export default MenuBar
+
+export default MenuBar;
