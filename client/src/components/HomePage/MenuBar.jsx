@@ -1,10 +1,16 @@
+import { Button } from 'primereact/button';
 import { TabMenu } from 'primereact/tabmenu';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import Register from './Register';
 import Login from './Login';
+import { logOut } from '../../redux/tokenSlice';
+import { useDispatch,useSelector } from 'react-redux';
+import { Menubar } from 'primereact/menubar';
 
 const MenuBar = () => {
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const items = [
         {
@@ -36,21 +42,18 @@ const MenuBar = () => {
             } 
         }
     ];
-
-    const end = (
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', backgroundColor: 'lightgray', padding: '5px' }}>
-            <Register />
-            <Login />
+const end=(
+    <Button  onClick={()=>{logOut()}}>  logOut</Button>
+)
+const logOut=()=>{
+dispatch(logOut())
+navigate('/login')
+}
+    return (
+        <div className="card">
+            <MenuBar model={items}  end={end}/>
         </div>
     );
-
-    return (
-        <>
-        <div className="card">
-            <TabMenu model={items} end={end} />
-        </div></>
-    );
-
     
 }
 

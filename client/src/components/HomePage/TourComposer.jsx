@@ -56,43 +56,43 @@ const TourComposer = () => {
                 maxDuration: typeof duration === 'number' ? duration : 0,
                 maxPrice: typeof budget === 'number' ? budget : 0,
             });
+            console.log(response)
+            // let totalPrice = 0;
+            // let totalDuration = 0;
 
-            let totalPrice = 0;
-            let totalDuration = 0;
+            // for (let j = 0; j < response.data.totalStations; j++) {
+            //     const station = response.data.matchedStations[j];
 
-            for (let j = 0; j < response.data.totalStations; j++) {
-                const station = response.data.matchedStations[j];
+            //     if (isNaN(station.price) || isNaN(station.duration)) {
+            //         console.error(`Invalid station data:`, station);
+            //         continue;
+            //     }
 
-                if (isNaN(station.price) || isNaN(station.duration)) {
-                    console.error(`Invalid station data:`, station);
-                    continue;
-                }
+            //     if (totalPrice + station.price > budget || totalDuration + station.duration > duration) {
+            //         if (response.data.tourStations.length > 1) {
+            //             const tour = {
+            //                 stations: response.data.tourStations,
+            //                 estimatedDuration: totalDuration,
+            //                 estimatedPrice: {
+            //                     min: totalPrice,
+            //                     max: totalPrice
+            //                 },
+            //                 tourStyle: response.data.tourStyleValue
+            //             };
 
-                if (totalPrice + station.price > budget || totalDuration + station.duration > duration) {
-                    if (response.data.tourStations.length > 1) {
-                        const tour = {
-                            stations: response.data.tourStations,
-                            estimatedDuration: totalDuration,
-                            estimatedPrice: {
-                                min: totalPrice,
-                                max: totalPrice
-                            },
-                            tourStyle: response.data.tourStyleValue
-                        };
+            //             console.log('Matching tour:', tour);
+            //             response.data.matchingTours.push(tour);
+            //         }
+            //         break;
+            //     }
 
-                        console.log('Matching tour:', tour);
-                        response.data.matchingTours.push(tour);
-                    }
-                    break;
-                }
+            //     response.data.tourStations.push(station._id);
+            //     totalPrice += station.price;
+            //     totalDuration += station.duration;
+            // }
 
-                response.data.tourStations.push(station._id);
-                totalPrice += station.price;
-                totalDuration += station.duration;
-            }
-
-            console.log('תוצאות חיפוש:', response.data.matchingTours);
-            setVisible(false);
+            // console.log('תוצאות חיפוש:', response.data.matchingTours);
+            // setVisible(false);
         } catch (error) {
             console.error('שגיאה בחיפוש סיורים:', error);
         }
