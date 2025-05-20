@@ -3,18 +3,22 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from "primereact/inputtext";
 import axios from 'axios';
+import { setToken, setUser,setRole } from '../../redux/tokenSlice';
 
-
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
+    const dispatch = useDispatch();
 
     const [visible, setVisible] = useState(false);
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const Log_In = async () => {
-        await axios.post('http://localhost:4321/api/auth/login', { email: email, password: password })
+        const { data } = await axios.post('http://localhost:4321/api/auth/login', { email: email, password: password })
+        dispatch(setUser(data.user));
+        dispatch(setRole(data.role));
+        dispatch(setToken(data.accessToken));
     }
-   
 
     return (
         <div className="card flex justify-content-center">

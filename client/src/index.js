@@ -9,12 +9,20 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import './index.css';
 import './flags.css';
-
+import { Provider } from "react-redux"
+import { store } from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './redux/store'; // Make sure your store is configured correctly
+import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+   <BrowserRouter>
+    <Provider store={store} >
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
