@@ -1,12 +1,10 @@
 import { Button } from 'primereact/button';
-import { TabMenu } from 'primereact/tabmenu';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Register from './Register';
 import Login from './Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../redux/tokenSlice';
-import { Button } from 'primereact/button';
 import { Menubar } from 'primereact/menubar';
 
 const MyMenuBar = () => {
