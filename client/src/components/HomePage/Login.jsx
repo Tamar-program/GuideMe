@@ -4,12 +4,10 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from "primereact/inputtext";
 import axios from 'axios';
 import { setToken, setUser,setRole } from '../../redux/tokenSlice';
-
 import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
     const dispatch = useDispatch();
-
     const [visible, setVisible] = useState(false);
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -19,7 +17,6 @@ const Login = () => {
         dispatch(setRole(data.role));
         dispatch(setToken(data.accessToken));
     }
-
     return (
         <div className="card flex justify-content-center">
             <Button label="כניסה כמשתמש רשום" icon="pi pi-user" onClick={() => setVisible(true)} />

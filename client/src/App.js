@@ -6,6 +6,7 @@ import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from './components/HomePage/Home';
 import AllTourStations from './components/TouristSites/AllTourStations';
+
 import { useDispatch,useSelector } from 'react-redux';
 import Login from './components/HomePage/Login';
 
@@ -21,7 +22,6 @@ function App() {
                <Route path="/login" element={<Login/>} />                
              
             </Routes>
-
     </div>
   );
 }
