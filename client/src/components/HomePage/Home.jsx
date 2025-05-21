@@ -7,8 +7,8 @@ const Home = () => {
     return (<>
         <MenuBar/>
    
-        <Login />
-        <Register />
+        {/* <Login />
+        <Register /> */}
         <TourComposer />
         <div style={grid1Style}>
             <div style={grid2Style}>

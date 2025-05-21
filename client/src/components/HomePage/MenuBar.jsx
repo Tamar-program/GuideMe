@@ -1,17 +1,19 @@
 import { Button } from 'primereact/button';
 import { TabMenu } from 'primereact/tabmenu';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Register from './Register';
 import Login from './Login';
+import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../redux/tokenSlice';
-import { useDispatch,useSelector } from 'react-redux';
+import { Button } from 'primereact/button';
 import { Menubar } from 'primereact/menubar';
 
-const MenuBar = () => {
+const MyMenuBar = () => {
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
+    const [visible, setVisible] = useState(false);
+
     const items = [
         {
             label: 'Home',
@@ -35,26 +37,32 @@ const MenuBar = () => {
                 navigate("/WinningRoutes")
             }
         },
-        { label: 'מועדפים', 
+        {
+            label: 'מועדפים',
             icon: 'pi pi-heart',
             command: () => {
-               
-            } 
+
+            }
         }
     ];
-const end=(
-    <Button  onClick={()=>{logOut()}}>  logOut</Button>
-)
-const logOut=()=>{
-dispatch(logOut())
-navigate('/login')
-}
-    return (
-        <div className="card">
-            <MenuBar model={items}  end={end}/>
+    const end = (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Login />
+            <Register />
+            <Button onClick={() => { logOutButton() }}>  logOut</Button>
         </div>
+    )
+    const logOutButton = () => {
+        dispatch(logOut())
+        navigate('/login')
+    }
+
+    return (
+        <>
+            <div className="card">
+                <Menubar model={items} end={end} />
+            </div></>
     );
-    
 }
 
-export default MenuBar;
+export default MyMenuBar;
