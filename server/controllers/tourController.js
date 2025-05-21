@@ -39,7 +39,7 @@ const createTour = async (req, res) => {
         const existingUser = await User.findOne({ _id });
         console.log(existingUser)
         if (existingUser) {
-          return res.status(400).json({ message: 'Tour already exists.' });
+            return res.status(400).json({ message: 'Tour already exists.' });
         }
         const newTour = await Tour.create({ stations, estimatedDuration, estimatedPrice, tourStyle });
         const result = await Tour.find()
@@ -81,20 +81,11 @@ const deleteTour = async (req, res) => {
     }
 };
 
-// Function to search for tours based on criteria
-function arraysEqual(a, b) {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-        if (a[i].toString() !== b[i].toString()) return false;
-    }
-    return true;
-}
-
 const searchTours = async (req, res) => {
     try {
         const {
-            maxDuration,
-            maxPrice,
+            maxDuration = 60,
+            maxPrice = 25,
             categories,
             accessibility,
             publicTransport
@@ -106,19 +97,22 @@ const searchTours = async (req, res) => {
             query.categories = { $in: categories };
         }
 
-        if (accessibility) {
+        if (accessibility === true) {
             query.accessibility = true;
         }
 
-        if (publicTransport) {
+        if (publicTransport === true) {
             query.publicTransportAvailable = true;
         }
 
         const matchedStations = await TourStation.find(query);
+
+        if (matchedStations.length === 0) {
+            console.warn("לא נמצאו תחנות מתאימות! בדוק את השאילתה או את הנתונים בבקשה.");
+        }
+
         const matchingTours = [];
         const totalStations = matchedStations.length;
-
-        // Set tourStyle to the full categories array or ['other'] if empty
         const tourStyleValue = categories && categories.length > 0 ? categories : ['other'];
 
         for (let i = 0; i < totalStations; i++) {
@@ -129,18 +123,19 @@ const searchTours = async (req, res) => {
             for (let j = i; j < totalStations; j++) {
                 const station = matchedStations[j];
 
+                if (isNaN(station.price) || isNaN(station.duration)) {
+                    console.error('Invalid station data:', station);
+                    continue;
+                }
+
                 if (totalPrice + station.price > maxPrice || totalDuration + station.duration > maxDuration) {
                     if (tourStations.length > 1) {
                         const tour = new Tour({
                             stations: tourStations,
                             estimatedDuration: totalDuration,
-                            estimatedPrice: {
-                                min: totalPrice,
-                                max: totalPrice
-                            },
+                            estimatedPrice: totalPrice,
                             tourStyle: tourStyleValue
                         });
-
                         await tour.save();
                         matchingTours.push(tour);
                     }
@@ -154,22 +149,24 @@ const searchTours = async (req, res) => {
 
             if (tourStations.length > 1) {
                 if (!matchingTours.some(t => arraysEqual(t.stations, tourStations))) {
+                    const validTourStyles = ['history', 'culinary', 'culture', 'nature', 'art', 'other'];
+                    const filteredTourStyleValue = tourStyleValue.filter(style => validTourStyles.includes(style));
                     const tour = new Tour({
                         stations: tourStations,
                         estimatedDuration: totalDuration,
-                        estimatedPrice: {
-                            min: totalPrice,
-                            max: totalPrice
-                        },
+                        estimatedPrice: totalPrice,
                         tourStyle: tourStyleValue
                     });
-
                     await tour.save();
                     matchingTours.push(tour);
                 }
             }
         }
 
+        console.log('Final matchingTours count:', matchingTours.length);
+        if (matchingTours.length === 0) {
+            console.warn("לא נמצאו מסלולים תואמים! ייתכן שהנתונים לא מספקים או שהקריטריונים מצמצמים מדי.");
+        }
         res.status(200).json(matchingTours);
 
     } catch (error) {
@@ -178,4 +175,15 @@ const searchTours = async (req, res) => {
     }
 };
 
+function arraysEqual(a, b) {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; ++i) {
+        if (typeof a[i].equals === "function") {
+            if (!a[i].equals(b[i])) return false;
+        } else if (a[i] !== b[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 module.exports = { getAllTours, getTourById, createTour, updateTour, deleteTour, searchTours }
