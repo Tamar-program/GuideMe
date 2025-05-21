@@ -1,55 +1,61 @@
 import { Button } from 'primereact/button';
 import { TabMenu } from 'primereact/tabmenu';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { logOut } from '../../redux/tokenSlice';
-import { useDispatch,useSelector } from 'react-redux';
-import { Menubar } from 'primereact/menubar';
 
 const MenuBar = () => {
-    const dispatch = useDispatch();
-
     const navigate = useNavigate();
+    const [visible, setVisible] = useState(false);
+
     const items = [
         {
-            label: 'Dashboard',
+            label: 'Home',
             icon: 'pi pi-home',
             command: () => {
-                navigate("/user")
+                navigate("/")
             }
         },
         {
-            label: 'Transactions',
-            icon: 'pi pi-chart-line',
+            icon: 'pi pi-map',
+            label: 'האתרים שלנו',
+            // icon: 'pi-globe',
             command: () => {
-                navigate("/Tour")
+                navigate("/TouristSites")
             }
         },
         {
-            label: 'Products',
-            icon: 'pi pi-list',
+            label: 'מסלולים מנצחים',
+            icon: 'pi pi-trophy',
+            command: () => {
+                navigate("/WinningRoutes")
+            }
+        },
+        {
+            label: 'מועדפים',
+            icon: 'pi pi-heart',
             command: () => {
 
             }
-        },
-        { label: 'Messages', 
-            icon: 'pi pi-inbox',
-            command: () => {
-               
-            } 
         }
     ];
-const end=(
-    <Button  onClick={()=>{logOut()}}>  logOut</Button>
-)
-const logOut=()=>{
-dispatch(logOut())
-navigate('/login')
-}
+
     return (
         <div className="card">
-            <MenuBar model={items}  end={end}/>
+            <TabMenu model={items} />
         </div>
     )
+    const logOutButton = () => {
+        dispatch(logOut())
+        navigate('/login')
+    }
+
+    return (
+        <>
+            <div className="card">
+                <Menubar model={items} end={end} />
+            </div></>
+    );
+
 }
-export default MenuBar
+
+export default MyMenuBar;

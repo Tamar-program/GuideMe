@@ -6,8 +6,9 @@ import Register from "./Register";
 const Home = () => {
     return (<>
         <MenuBar/>
-        <Login />
-        <Register />
+   
+        {/* <Login />
+        <Register /> */}
         <TourComposer />
         <div style={grid1Style}>
             <div style={grid2Style}>
@@ -59,5 +60,9 @@ const grid3Style = {
     background: '255'
     , color: '#daa520'
 };
+
+
+
+
 
 export default Home;
