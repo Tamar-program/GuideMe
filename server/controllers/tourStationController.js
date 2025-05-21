@@ -3,7 +3,7 @@ const TourStation = require('../models/TourStation');
 // Function to retrieve all stations
 const getAllStations = async (req, res) => {
     try {
-        const stations = await TourStation.find();
+        const stations = await TourStation.find().populate('address');
         if (!stations) {
             return res.status(404).json({ error: 'No tours' });
         }
@@ -20,7 +20,7 @@ const getStationById = async (req, res) => {
         if (!id) {
             return res.status(400).json({ error: 'Id is required' });
         }
-        const station = await TourStation.findById(id);
+        const station = await TourStation.findById(id).populate('address');
         console.log(station)
         if (!station) {
             return res.status(404).json({ error: 'Station not found' });
