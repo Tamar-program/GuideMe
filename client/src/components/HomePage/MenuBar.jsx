@@ -2,6 +2,11 @@ import { Button } from 'primereact/button';
 import { TabMenu } from 'primereact/tabmenu';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import Register from './Register';
+import Login from './Login';
+import { logOut } from '../../redux/tokenSlice';
+import { useDispatch,useSelector } from 'react-redux';
+import { Menubar } from 'primereact/menubar';
 
 const MenuBar = () => {
     const navigate = useNavigate();
@@ -38,24 +43,19 @@ const MenuBar = () => {
             }
         }
     ];
-
+const end=(
+    <Button  onClick={()=>{logOut()}}>  logOut</Button>
+)
+const logOut=()=>{
+dispatch(logOut())
+navigate('/login')
+}
     return (
         <div className="card">
-            <TabMenu model={items} />
+            <MenuBar model={items}  end={end}/>
         </div>
-    )
-    const logOutButton = () => {
-        dispatch(logOut())
-        navigate('/login')
-    }
-
-    return (
-        <>
-            <div className="card">
-                <Menubar model={items} end={end} />
-            </div></>
     );
-
+    
 }
 
 export default MyMenuBar;
