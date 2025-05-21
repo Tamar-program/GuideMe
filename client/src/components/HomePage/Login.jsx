@@ -29,7 +29,6 @@ const Login = () => {
                 onHide={() => { if (!visible) return; setVisible(false); }}
                 content={({ hide }) => (
                     <div className="flex flex-column px-8 py-5 gap-4" style={{ borderRadius: '12px', backgroundImage: 'radial-gradient(circle at left top, var(--primary-400), var(--primary-700))' }}>
-
                         <div className="inline-flex flex-column gap-2">
                             <label htmlFor="email" className="text-primary-50 font-semibold">
                                 email
