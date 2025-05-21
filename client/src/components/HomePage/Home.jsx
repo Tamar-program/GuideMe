@@ -5,7 +5,7 @@ import Register from "./Register";
 
 const Home = () => {
     return (<>
-        <MenuBar/>
+        {/* <MenuBar/> */}
    
         {/* <Login />
         <Register /> */}
