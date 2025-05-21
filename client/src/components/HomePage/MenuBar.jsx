@@ -1,3 +1,4 @@
+import { Button } from 'primereact/button';
 import { TabMenu } from 'primereact/tabmenu';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
@@ -7,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../redux/tokenSlice';
 import { Button } from 'primereact/button';
 import { Menubar } from 'primereact/menubar';
-// import {}
 
 const MyMenuBar = () => {
     const dispatch = useDispatch();
@@ -45,7 +45,6 @@ const MyMenuBar = () => {
             }
         }
     ];
-
     const end = (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Login />
@@ -64,7 +63,6 @@ const MyMenuBar = () => {
                 <Menubar model={items} end={end} />
             </div></>
     );
-
 }
 
 export default MyMenuBar;
