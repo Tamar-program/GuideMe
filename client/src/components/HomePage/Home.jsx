@@ -1,6 +1,6 @@
 import TourComposer from "./TourComposer";
 import Login from "./Login";
-import MenuBar from "./MenuBar";
+
 import Register from "./Register";
 
 const Home = () => {
