@@ -13,6 +13,7 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const Log_In = async () => {
         const { data } = await axios.post('http://localhost:4321/api/auth/login', { email: email, password: password })
+        console.log(data.user);
         dispatch(setUser(data.user));
         dispatch(setRole(data.role));
         dispatch(setToken(data.accessToken));

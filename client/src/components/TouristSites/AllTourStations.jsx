@@ -8,28 +8,15 @@ import { Dialog } from 'primereact/dialog';
 import { Tag } from 'primereact/tag';
 import { Divider } from 'primereact/divider';
 
-const AllTourStations = () => {
-    const [tourStations, setTourStations] = useState([]);
+const AllTourStations = (props) => {
+    const tourStations=props.tourStations || [];
+    // const [tourStations, setTourStations] = useState([]);
     const [thisTourStation, setThisTourStation] = useState(null);
     const [layout, setLayout] = useState('grid');
     const [visible, setVisible] = useState(false);
 
-    const getAllTourStations = async () => {
-        try {
-            const data = await axios.get('http://localhost:4321/api/tourStation');
-            if (!data.data) {
-                throw new Error('Network response was not ok');
-            }
-            setTourStations(data.data);
-        }
-        catch (error) {
-            console.error('Error fetching tour stations:', error);
-        }
-    };
-
-    useEffect(() => {
-        getAllTourStations();
-    }, []);
+    
+ 
 
     const listItem = (tourStation, index) => {
         return (
