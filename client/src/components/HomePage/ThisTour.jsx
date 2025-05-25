@@ -1,6 +1,4 @@
-// אין צורך להוסיף קוד ב-$PLACEHOLDER$ כדי למנוע מחיקה של הקובץ.
-// כדי להבטיח שהקובץ לא יימחק, ודא שאתה שומר את הקובץ במערכת הקבצים שלך.
-// בנוסף, השתמש במערכת ניהול גרסאות כמו Git כדי לעקוב אחר שינויים ולשמור עותקים של הקובץ.
+
 import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
@@ -9,27 +7,30 @@ import axios from 'axios';
 
 
 
-const ResponsiveDemo = (props) => {
-  const [stations, setStations] = useState([]);
- 
+const ThisTour = (props) => {
+  const stations=props.stations || [];
+   const [visible, setVisible] = useState(false);
+  const [thisTourStation, setThisTourStation] = useState(null);
+
+  
   const responsiveOptions = [
     {
-      breakpoint: '1400px',
+      breakpoint: '2000px',
       numVisible: 2,
       numScroll: 1
     },
     {
-      breakpoint: '1199px',
+      breakpoint: '3000px',
       numVisible: 3,
       numScroll: 1
     },
     {
-      breakpoint: '767px',
+      breakpoint: '1000px',
       numVisible: 2,
       numScroll: 1
     },
     {
-      breakpoint: '575px',
+      breakpoint: '850px',
       numVisible: 1,
       numScroll: 1
     }
@@ -37,34 +38,41 @@ const ResponsiveDemo = (props) => {
 
 
 
-  useEffect(() => {
-    const data = axios.get(`http://localhost:4321/api/TourStation/${props.id}`)
-    setStations(data.data);
-  }, []);
+  // useEffect(() => {
+  //   const data = axios.get(`http://localhost:4321/api/TourStation/${props.id}`)
+  //   setStations(data.data);
+  // }, []);
 
-  const stationTemplate = (station) => {
+  const stationTemplate = () => {
+
+  console.log(stations[0]._id);
+
     return (
-      <div className="border-1 surface-border border-round m-2 text-center py-5 px-3">
-        <div className="mb-3">
-          <img src={station.img} alt={station.name} className="w-6 shadow-2" />
-        </div>
-        <div>
-          <h4 className="mb-1">{station.name}</h4>
-          <h6 className="mt-0 mb-3">ש"ח{station.price}</h6>
-          {/* <Tag value={product.inventoryStatus}></Tag> */}
-          <div className="mt-5 flex flex-wrap gap-2 justify-content-center">
-            {/* <Button icon="pi pi-search" className="p-button p-button-rounded" />
-                        <Button icon="pi pi-star-fill" className="p-button-success p-button-rounded" /> */}
-          </div>
-        </div>
-      </div>
+       <img src={`${stations[0].images[0]}`} alt={stations[0].name} className="w-6 shadow-2" />
+    //   <div className="border-1 surface-border border-round m-2 text-center py-5 px-3">
+    //     <div className="mb-3">
+    //       <img src={`${station.images}`} alt={station.name} className="w-6 shadow-2" />
+    //     </div>
+    //     <div>
+    //       {/* <h4 className="mb-1">{station.name}</h4>
+    //       <h6 className="mt-0 mb-3">ש"ח{station.price}</h6> */}
+    //       {/* <Tag value={product.inventoryStatus}></Tag> */}
+    //       <div className="mt-5 flex flex-wrap gap-2 justify-content-center">
+    //         {/* <Button label="פרטים נוספים" icon="pi pi-info" className="p-button-outlined p-button-secondary" onClick={() => props.onStationClick(station)} /> */}
+    //       </div>
+    //     </div>
+    //   </div>
     );
   };
 
+
+
+  
+  
   return (
     <div className="card">
       <Carousel value={stations} numScroll={1} numVisible={3} responsiveOptions={responsiveOptions} itemTemplate={stationTemplate} />
     </div>
   )
 }
-export default ResponsiveDemo;
+export default ThisTour;

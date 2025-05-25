@@ -9,6 +9,7 @@ const Home = () => {
    
         {/* <Login />
         <Register /> */}
+        
         <TourComposer />
         <div style={grid1Style}>
             <div style={grid2Style}>

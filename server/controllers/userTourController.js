@@ -5,6 +5,7 @@ const Tour = require('../models/Tour');
 // Function to retrieve all user tours
 const getAllUserTours = async (req, res) => {
     try {
+       
         const userTours = await UserTour.find()
             .populate('userId', 'name email') // Populate user details
             .populate('tourId', 'tourStyle estimatedDuration estimatedPrice'); // Populate tour details
@@ -26,17 +27,25 @@ const getUserToursByUserId = async (req, res) => {
         console.log("User ID:", id);
 
         const userTours = await UserTour.find({ userId: id })
-            .populate('userId', 'name email') 
-            .populate('tourId', 'tourStyle estimatedDuration'); 
+            .populate('userId', 'name email')
+            .populate({
+                path: 'tourId',
+                select: 'tourStyle estimatedDuration estimatedPrice stations',
+                populate: {
+                    path: 'stations',
+                    model: 'TourStation' // ודא שזה שם המודל שלך
+                }
+            });
 
+        console.log("Retrieved user tours:", userTours);
         if (!userTours || userTours.length === 0) {
             return res.status(200).json({ error: 'No tours found for this user' });
         }
 
         res.status(200).json(userTours);
     } catch (error) {
-        console.error("Error retrieving tours for the user:", error); // הדפסת השגיאה
-        res.status(500).json({ error: 'Error retrieving tours for the user' });
+        console.error("Error retrieving tours for the user:", error);
+        return res.status(500).json({ error: 'Error retrieving tours for the user' });
     }
 };
 
@@ -61,9 +70,9 @@ const createUserTour = async (req, res) => {
         }
 
         const newUserTour = await UserTour.create({ userId, tourId });
-        res.status(201).json(newUserTour);
+      return  res.status(201).json(newUserTour);
     } catch (error) {
-        res.status(500).json({ error: 'Error creating user tour' });
+        return res.status(500).json({ error: 'Error creating user tour' });
     }
 };
 
@@ -89,9 +98,9 @@ const updateUserTour = async (req, res) => {
             return res.status(404).json({ error: 'User tour not found' });
         }
 
-        res.status(200).json(updatedUserTour);
+       return res.status(200).json(updatedUserTour);
     } catch (error) {
-        res.status(500).json({ error: 'Error updating the user tour' });
+       return res.status(500).json({ error: 'Error updating the user tour' });
     }
 };
 
@@ -112,7 +121,7 @@ const deleteUserTours = async (req, res) => {
 
         res.status(200).json({ message: `User tour with ID ${id} was successfully deleted` });
     } catch (error) {
-        res.status(500).json({ error: 'Error deleting the user tour' });
+       return res.status(500).json({ error: 'Error deleting the user tour' });
     }
 };
 

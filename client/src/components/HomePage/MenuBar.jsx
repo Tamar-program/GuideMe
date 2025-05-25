@@ -39,7 +39,7 @@ const MyMenuBar = () => {
             label: 'מועדפים',
             icon: 'pi pi-heart',
             command: () => {
-
+                navigate("/FavoritesTours")
             }
         }
     ];
