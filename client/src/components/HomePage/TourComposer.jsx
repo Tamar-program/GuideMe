@@ -7,14 +7,19 @@ import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { MultiSelect } from 'primereact/multiselect';
 import axios from 'axios';
+import FoundTours from '../FindTours/FoundTours';
+import { useNavigate } from "react-router-dom";
 
 const TourComposer = () => {
+    const navigate = useNavigate();
     const [visible, setVisible] = useState(false);
-    const [duration, setDuration] = useState(0.25);
-    const [tourType, setTourType] = useState([]);
-    const [accessible, setAccessible] = useState(false);
+    const [duration, setDuration] = useState(25);
+    const [tourType, setTourType] = useState([""]);
+    const [accessibility, setAccessibility] = useState(false);
     const [budget, setBudget] = useState(50);
     const [publicTransport, setPublicTransport] = useState(false);
+    const [results, setResults] = useState([]);
+    // const [showFindTours, setShowFindTours] = useState(false);
 
     const tourTypes = [
         { name: 'history', icon: 'https://img.icons8.com/ios/50/000000/museum.png' },
@@ -50,52 +55,35 @@ const TourComposer = () => {
     const searchTours = async () => {
         try {
             const response = await axios.post('http://localhost:4321/api/tour/search', {
-                accessibility: accessible,
                 publicTransport: publicTransport,
                 categories: Array.isArray(tourType) ? tourType.map((type) => type.name) : [],
                 maxDuration: typeof duration === 'number' ? duration : 0,
                 maxPrice: typeof budget === 'number' ? budget : 0,
+                accessibility: accessibility
             });
             console.log(response)
-            // let totalPrice = 0;
-            // let totalDuration = 0;
-
-            // for (let j = 0; j < response.data.totalStations; j++) {
-            //     const station = response.data.matchedStations[j];
-
-            //     if (isNaN(station.price) || isNaN(station.duration)) {
-            //         console.error(`Invalid station data:`, station);
-            //         continue;
-            //     }
-
-            //     if (totalPrice + station.price > budget || totalDuration + station.duration > duration) {
-            //         if (response.data.tourStations.length > 1) {
-            //             const tour = {
-            //                 stations: response.data.tourStations,
-            //                 estimatedDuration: totalDuration,
-            //                 estimatedPrice: {
-            //                     min: totalPrice,
-            //                     max: totalPrice
-            //                 },
-            //                 tourStyle: response.data.tourStyleValue
-            //             };
-
-            //             console.log('Matching tour:', tour);
-            //             response.data.matchingTours.push(tour);
-            //         }
-            //         break;
-            //     }
-
-            //     response.data.tourStations.push(station._id);
-            //     totalPrice += station.price;
-            //     totalDuration += station.duration;
+            setResults(response.data)
+            setVisible(false)
+            navigate('/found-tours', { state: { results: response.data } });
+            // setShowFindTours(true);
+            // {
+            //     results.length > 0 && (
+            //         <div>
+            //             <h3>תוצאות:</h3>
+            //             <div>
+            //                 {results.map((tour, idx) => (
+            //                     <div> key={tour._id || idx}
+            //                         {tour.name} - {tour.shortDescription}
+            //                     </div>
+            //                 ))}
+            //             </div>
+            //         </div>
+            //     )
             // }
-
-            // console.log('תוצאות חיפוש:', response.data.matchingTours);
-            // setVisible(false);
         } catch (error) {
-            console.error('שגיאה בחיפוש סיורים:', error);
+            console.error('Error searching for tours:', error);
         }
+
     };
 
     return (
@@ -125,7 +113,7 @@ const TourComposer = () => {
                                             value={typeof duration === 'number' ? duration : 0}
                                             onChange={(e) => setDuration(typeof e.value === 'number' ? e.value : 0)}
                                             min={0}
-                                            max={10}
+                                            max={1200}
                                             step={0.25}
                                             className="w-14rem"
                                         />
@@ -165,8 +153,8 @@ const TourComposer = () => {
                             </div>
                             <div className="form-field checkbox-field">
                                 <Checkbox
-                                    checked={!!accessible}
-                                    onChange={(e) => setAccessible(!!e.checked)}
+                                    checked={!!accessibility}
+                                    onChange={(e) => setAccessibility(!!e.checked)}
                                 />
                                 <label htmlFor="accessible" className="text-primary-50 font-semibold">מונגש</label>
                             </div>
@@ -185,6 +173,9 @@ const TourComposer = () => {
                     )}
                 ></Dialog>
             </div>
+            {/* {showFindTours && results.length > 0 && (
+                <FoundTours results={results} />
+            )} */}
         </>
     );
 };

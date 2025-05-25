@@ -9,6 +9,7 @@ import AllTourStations from './components/TouristSites/AllTourStations';
 import { useDispatch,useSelector } from 'react-redux';
 import Login from './components/HomePage/Login';
 import MyMenuBar from './components/HomePage/MenuBar';
+import FoundTours from './components/FindTours/FoundTours';
 
 function App() {
   const { token, role, user } = useSelector((state) => state.token);
@@ -20,7 +21,7 @@ function App() {
                <Route path="/" element={<Home/>} />   
                <Route path="/TouristSites" element={<AllTourStations/>} />               
                <Route path="/login" element={<Login/>} />                
-             
+               <Route path="/found-tours" element={<FoundTours/>} />
             </Routes>
     </div>
   );
