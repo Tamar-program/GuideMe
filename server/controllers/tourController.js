@@ -83,6 +83,7 @@ const deleteTour = async (req, res) => {
 
 const searchTours = async (req, res) => {
     try {
+        debugger
         const {
             maxDuration = 60,
             maxPrice = 25,
