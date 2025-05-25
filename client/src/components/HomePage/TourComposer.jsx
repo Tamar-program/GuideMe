@@ -7,8 +7,9 @@ import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { MultiSelect } from 'primereact/multiselect';
 import axios from 'axios';
-import FoundTours from '../FindTours/FoundTours';
+// import FoundTours from '../FindTours/FoundTours';
 import { useNavigate } from "react-router-dom";
+import TourService from '../FindTours/service/TourService';
 
 const TourComposer = () => {
     const navigate = useNavigate();
@@ -63,31 +64,16 @@ const TourComposer = () => {
             });
             console.log(response)
             setResults(response.data)
+            TourService.setToursResults(response.data);
             setVisible(false)
-            navigate('/found-tours', { state: { results: response.data } });
-            // setShowFindTours(true);
-            // {
-            //     results.length > 0 && (
-            //         <div>
-            //             <h3>תוצאות:</h3>
-            //             <div>
-            //                 {results.map((tour, idx) => (
-            //                     <div> key={tour._id || idx}
-            //                         {tour.name} - {tour.shortDescription}
-            //                     </div>
-            //                 ))}
-            //             </div>
-            //         </div>
-            //     )
-            // }
+            // debugger
+            navigate('/found-tours', { state: { results: response.data} });
         } catch (error) {
             console.error('Error searching for tours:', error);
         }
-
     };
 
-    return (
-        <>
+    return (<>
             <div className="card flex justify-content-center">
                 <Button
                     label="הרכב סיור"
@@ -173,9 +159,6 @@ const TourComposer = () => {
                     )}
                 ></Dialog>
             </div>
-            {/* {showFindTours && results.length > 0 && (
-                <FoundTours results={results} />
-            )} */}
         </>
     );
 };

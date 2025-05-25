@@ -20,6 +20,14 @@ const tourSchema = new mongoose.Schema({
     type: [String], // Style of the tour
     enum: ['history', 'culinary', 'culture', 'nature', 'art', 'other'], // Allowed values
     default: ['other']
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  status:{
+    type:String,
+    enum:['ליום שימשי','ליום קריר','']
   }
 }, {
   timestamps: true
