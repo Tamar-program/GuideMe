@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
@@ -43,25 +42,31 @@ const ThisTour = (props) => {
   //   setStations(data.data);
   // }, []);
 
-  const stationTemplate = () => {
-
-  console.log(stations[0]._id);
+  const stationTemplate = (station) => {
+    if (!station) return null;
 
     return (
-       <img src={`${stations[0].images[0]}`} alt={stations[0].name} className="w-6 shadow-2" />
-    //   <div className="border-1 surface-border border-round m-2 text-center py-5 px-3">
-    //     <div className="mb-3">
-    //       <img src={`${station.images}`} alt={station.name} className="w-6 shadow-2" />
-    //     </div>
-    //     <div>
-    //       {/* <h4 className="mb-1">{station.name}</h4>
-    //       <h6 className="mt-0 mb-3">ש"ח{station.price}</h6> */}
-    //       {/* <Tag value={product.inventoryStatus}></Tag> */}
-    //       <div className="mt-5 flex flex-wrap gap-2 justify-content-center">
-    //         {/* <Button label="פרטים נוספים" icon="pi pi-info" className="p-button-outlined p-button-secondary" onClick={() => props.onStationClick(station)} /> */}
-    //       </div>
-    //     </div>
-    //   </div>
+      <div className="border-1 surface-border border-round m-2 text-center py-5 px-3">
+        <div className="mb-3">
+          <img
+            src={station.images && station.images[0]}
+            alt={station.name}
+            className="w-6 shadow-2"
+          />
+        </div>
+        <div>
+          <h4 className="mb-1">{station.name}</h4>
+          <h6 className="mt-0 mb-3">{station.price ? `ש"ח${station.price}` : ''}</h6>
+          <div className="mt-5 flex flex-wrap gap-2 justify-content-center">
+            <Button
+              label="פרטים נוספים"
+              icon="pi pi-info"
+              className="p-button-outlined p-button-secondary"
+              onClick={() => props.onStationClick && props.onStationClick(station)}
+            />
+          </div>
+        </div>
+      </div>
     );
   };
 

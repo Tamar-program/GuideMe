@@ -9,6 +9,9 @@ import AllTourStations from './components/TouristSites/AllTourStations';
 import { useDispatch,useSelector } from 'react-redux';
 import Login from './components/HomePage/Login';
 import MyMenuBar from './components/HomePage/MenuBar';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import AllFavoritesTours from './components/Favorites/AllFavoritesTours';
 
 function App() {
       
@@ -69,9 +72,9 @@ useEffect(() => {
     { role=="Admin" ?<MyMenuBar/>:role=="User"?  <MyMenuBar/>:<MyMenuBar/>}
             <Routes>
                <Route path="/" element={<Home/>} />   
-               <Route path="/TouristSites" element={<AllTourStations/>} />               
+               <Route path="/TouristSites" element={<AllTourStations tourStations={tourStations}/>} />               
                <Route path="/login" element={<Login/>} />                
-             
+               <Route path="/FavoritesTours" element={<AllFavoritesTours/>} />
             </Routes>
     </div>
   );
