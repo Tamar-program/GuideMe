@@ -1,5 +1,7 @@
+// קובץ: MenuBar.jsx
+
 import { Button } from 'primereact/button';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import Register from './Register';
 import Login from './Login';
@@ -7,40 +9,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../redux/tokenSlice';
 import { Menubar } from 'primereact/menubar';
 
-const MyMenuBar = () => {
+const MenuBar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [visible, setVisible] = useState(false);
+
+    const logOutButton = () => {
+        dispatch(logOut())
+        navigate('/login')
+    };
 
     const items = [
-        {
-            label: 'Home',
-            icon: 'pi pi-home',
-            command: () => {
-                navigate("/")
-            }
-        },
-        {
-            icon: 'pi pi-map',
-            label: 'האתרים שלנו',
-            // icon: 'pi-globe',
-            command: () => {
-                navigate("/TouristSites")
-            }
-        },
-        {
-            label: 'מסלולים מנצחים',
-            icon: 'pi pi-trophy',
-            command: () => {
-                navigate("/WinningRoutes")
-            }
-        },
-        {
-            label: 'מועדפים',
-            icon: 'pi pi-heart',
-            command: () => {
+        { label: 'בית', icon: 'pi pi-home', command: () => navigate("/") },
+        { label: 'אתרי סיור', icon: 'pi pi-map-marker', command: () => navigate("/TouristSites") },
+        { label: 'מסלולים מנצחים', icon: 'pi pi-star', command: () => navigate("/WinningRoutes") },
+        { label: 'מועדפים', icon: 'pi pi-heart', command: () => navigate("/FavoritesTours") }
+    ];
 
-            }
+    const end = (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Login />
+            <Register />
+            <Button onClick={logOutButton} label="התנתק" icon="pi pi-sign-out" className="p-button-secondary p-button-sm" />
+        </div>
+    );
+
+    return (
+        <div className="card">
+            <Menubar model={items} end={end} style={{ backgroundColor: "#f9f9f9", borderBottom: "2px solid #ccc", borderRadius: "0" }} />
+        </div>
+    );
+};
+
+export default MenuBar;
         }
     ];
     const end = (
