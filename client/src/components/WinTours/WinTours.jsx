@@ -1,3 +1,5 @@
+import FoundTours from "../FindTours/FoundTours";
+
 const WinTours = (props) => {
     const usersTours = props.usersTours;
 
@@ -19,28 +21,17 @@ const WinTours = (props) => {
         (a, b) => b[1].length - a[1].length
     );
 
-    console.log("sortedTours:", sortedTours);
-
     const quarterLength = Math.ceil(sortedTours.length / 4);
-    console.log("quarterLength:", quarterLength);
 
-    let topTours = sortedTours.slice(0, quarterLength);
-    console.log("topTours:", topTours);
+    // מערך רגיל של מסלולים (הראשון מכל קבוצה)
+    let topTours = sortedTours.slice(0, quarterLength).map(([tourId, toursArr]) => toursArr[0].tourId);
 
     if (topTours.length === 0) {
-        topTours=sortedTours
+        topTours = sortedTours.map(([tourId, toursArr]) => toursArr[0].tourId);
     }
 
     return (
-      <div>
-        {topTours.map(([tourId, toursArr]) => (
-          <div key={tourId}>
-            <h1>Tour ID: {tourId}</h1>
-            <h3>Estimated Price: {toursArr[0].tourId.estimatedPrice}</h3>
-            <p>כמות הופעות: {toursArr.length}</p>
-          </div>
-        ))}
-      </div>
+      <FoundTours topTours={topTours}/>
     );
 }
 export default WinTours;
