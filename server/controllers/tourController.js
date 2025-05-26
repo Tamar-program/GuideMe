@@ -31,6 +31,8 @@ const getTourById = async (req, res) => {
 // Function to create a new tour
 const createTour = async (req, res) => {
     try {
+        console.log("hello");
+        
         const { _id, stations, estimatedDuration, estimatedPrice, tourStyle } = req.body
         // if (!email || !password) {
         //   res.status(400).json({ msg: "All fields are required." })
@@ -136,7 +138,7 @@ const searchTours = async (req, res) => {
                             estimatedPrice: totalPrice,
                             tourStyle: tourStyleValue
                         });
-                        await tour.save();
+                        // await tour.save();
                         matchingTours.push(tour);
                     }
                     break;
@@ -157,7 +159,7 @@ const searchTours = async (req, res) => {
                         estimatedPrice: totalPrice,
                         tourStyle: tourStyleValue
                     });
-                    await tour.save();
+                    // await tour.save();
                     matchingTours.push(tour);
                 }
             }

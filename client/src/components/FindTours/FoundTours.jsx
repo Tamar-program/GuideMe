@@ -1,91 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
-import { DataView } from 'primereact/dataview';
+import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Dropdown } from 'primereact/dropdown';
 import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
 import TourService from './service/TourService';
 import { useLocation } from "react-router-dom";
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-const FoundTours = () => {
+const FoundTours = (props) => {
+    const { token, role, user } = useSelector((state) => state.token);
+    console.log(role);
+    console.log(user);
+
     const location = useLocation();
-    const [sortKey, setSortKey] = useState('');
     const [sortOrder, setSortOrder] = useState(0);
     const [sortField, setSortField] = useState('');
-    const sortOptions = [
-        { label: 'א-ת', value: '!price' },
-        { label: 'ת-א', value: 'price' }
-    ];
-    const results = location.state?.results || [];
-    const [tours, setTours] = useState(results);
 
-    // console.log(results)
-    useEffect(() => {
-        // debugger
-        TourService.getProductsSmall().then((data) => setTours(data.slice(0, 5)));
-    }, []);
+    // const [duration, setDuration] = useState(25);
+    // const [tourType, setTourType] = useState([""]);
+    // const [accessibility, setAccessibility] = useState(false);
+    // const [budget, setBudget] = useState(50);
+    // const [publicTransport, setPublicTransport] = useState(false);
+    const results = location.state?.results || [];
+    const [tours, setTours] = useState(props ? props.topTours : results);
+
     useEffect(() => {
         setTours(results);
     }, [results]);
 
-    const getSeverity = (tour) => {
-        // switch (tour.status) {
-        //     case 'INSTOCK':
-        //         return 'success';
-
-        //     case 'LOWSTOCK':
-        //         return 'warning';
-
-        //     case 'OUTOFSTOCK':
-        //         return 'danger';
-
-        //     default:
-        //         return null;
-        // }
-    };
-
-    const onSortChange = (event) => {
-        const value = event.value;
-
-        if (value.indexOf('!') === 0) {
-            setSortOrder(-1);
-            setSortField(value.substring(1, value.length));
-            setSortKey(value);
-        } else {
-            setSortOrder(1);
-            setSortField(value);
-            setSortKey(value);
-        }
-    };
-
-    // const itemTemplate = (product, layout, index) => {
-    //     if (!product) {
-    //         return;
-    //     }
-
-    //     if (layout === 'list') return listItem(product, index);
-    //     else if (layout === 'grid') return gridItem(product);
-    // };
-
-    // const listTemplate = (products, layout) => {
-    //     return <div className="grid grid-nogutter">{products.map((product, index) => itemTemplate(product, layout, index))}</div>;
-    // };
     const header = () => {
         return (
             <div className="flex justify-content-end">
-                <Dropdown options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By ABC" onChange={onSortChange} className="w-full sm:w-14rem" />;
-                {/* <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} /> */}
+                {/* <Dropdown options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By ABC" onChange={onSortChange} className="w-full sm:w-14rem" />; */}
             </div>
         );
-
     };
+    const favorite = async (tour) => {
 
+        try {
+            console.log(user);
+
+            console.log(user._id, "userId");
+            console.log(tour._id, "tour._id");
+            console.log(tour, "tour");
+
+            console.log(tour._id, "tour._id");
+            // setAccessibility(tour.accessibility)
+            // setBudget(tour.budget)
+            // setDuration(tour.duration)
+            // setPublicTransport(tour.publicTransport)
+            // setTourType(tour.tourType)
+        // const { _id, stations, estimatedDuration, estimatedPrice, tourStyle } = req.body
+console.log(user._id);
+console.log(tour.stations);
+console.log(tour.estimatedDuration);
+console.log(tour.estimatedPrice);
+console.log(tour.tourStyle);
+
+
+            const tourResponse = await axios.post('http://localhost:4321/api/tour', { _id:user._id, stations: tour.stations, estimatedDuration: tour.estimatedDuration, estimatedPrice : tour.estimatedPrice, tourStyle: tour.tourStyle
+                // publicTransport: publicTransport,
+                // categories: Array.isArray(tourType) ? tourType.map((type) => type.name) : [],
+                // maxDuration: typeof duration === 'number' ? duration : 0,
+                // maxPrice: typeof budget === 'number' ? budget : 0,
+                // accessibility: accessibility
+            });
+            console.log("tourResponse",tourResponse);
+            
+            const response = await axios.post('http://localhost:4321/api/userTours', {
+                userId: user._id
+                , tourId: tour._id
+            });
+            console.log(response)
+            // setResults(response.data)
+            // TourService.setToursResults(response.data);
+            // setVisible(false)
+            // debugger
+            // navigate('/found-tours', { state: { results: response.data } });
+        } catch (error) {
+            console.error('Error searching for tours:', error);
+        }
+    }
     const itemTemplate = (tour, index) => {
         return (
             <div className="col-12" key={tour._id}>
                 <div className={classNames('flex flex-column xl:flex-row xl:align-items-start p-4 gap-4', { 'border-top-1 surface-border': index !== 0 })}>
-                    <img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={`https://primefaces.org/cdn/primereact/images/product/${tour.stations[0]}`} alt={tour._id} />
+                    <img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={`${tour.stations[0]}`} alt={tour._id} />
                     <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div className="flex flex-column align-items-center sm:align-items-start gap-3">
                             <div className="text-2xl font-bold text-900">{"שם המסלול"}</div>
@@ -95,12 +98,13 @@ const FoundTours = () => {
                                     <i className="pi pi-tag"></i>
                                     <span className="font-semibold">{tour.tourStyle}</span>
                                 </span>
-                                <Tag value={"ליום שמש"} severity={getSeverity(tour)}></Tag>
+                                <Tag value={"ליום שמש"} ></Tag>
                             </div>
                         </div>
                         <div className="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
                             <span className="text-2xl font-semibold">₪{tour.estimatedPrice}</span>
-                            <Button icon="pi pi-heart" className="p-button-rounded" disabled={tour.inventoryStatus === 'OUTOFSTOCK'}></Button>
+                            <Button icon="pi pi-heart" className="p-button-rounded" onClick={() => favorite(tour)}></Button>
+                            {/* disabled={tour.inventoryStatus === 'OUTOFSTOCK'} */}
                         </div>
                     </div>
                 </div>
@@ -114,7 +118,6 @@ const FoundTours = () => {
         let list = items.map((tour, index) => {
             return itemTemplate(tour, index);
         });
-
         return <div className="grid grid-nogutter">{list}</div>;
     };
 

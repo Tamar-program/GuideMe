@@ -23,7 +23,7 @@ const tourSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    default: 0
+    default: 3
   },
   status:{
     type:String,
