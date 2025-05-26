@@ -7,16 +7,21 @@ import axios from "axios";
 import { Dialog } from 'primereact/dialog';
 import { Tag } from 'primereact/tag';
 import { Divider } from 'primereact/divider';
+import { useSelector } from "react-redux";
+import { SplitButton } from "primereact/splitbutton";
+import { InputText } from "primereact/inputtext";
+import { InputNumber } from "primereact/inputnumber";
 
 const AllTourStations = (props) => {
-    const tourStations=props.tourStations || [];
+    const tourStations = props.tourStations || [];
     // const [tourStations, setTourStations] = useState([]);
     const [thisTourStation, setThisTourStation] = useState(null);
     const [layout, setLayout] = useState('grid');
     const [visible, setVisible] = useState(false);
+    const { token, role, user } = useSelector((state) => state.token);
+    const [viewAdd, setViewAdd] = useState(false);
 
-    
- 
+
 
     const listItem = (tourStation, index) => {
         return (
@@ -95,14 +100,19 @@ const AllTourStations = (props) => {
         return (
             <div className="flex justify-content-end">
                 <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
+                {role === "Admin" ? <Button label="הוסף אתר" icon="pi pi-plus" severity="success" onClick={() => setViewAdd(true)} /> : <></>}
             </div>
         );
     };
 
     return (
+
         <div className="card flex justify-content-center">
+
             <div className="card">
+
                 <DataView value={tourStations} listTemplate={listTemplate} layout={layout} header={header()} />
+
             </div>
             <div className="card flex justify-content-center">
 
@@ -116,7 +126,7 @@ const AllTourStations = (props) => {
                     <div className="flex flex-column align-items-center gap-3">
                         {/* תמונה גדולה */}
                         <img
-                            src={`${thisTourStation?.images?.[1]||thisTourStation?.images?.[0]|| 'default.jpg'}`}
+                            src={`${thisTourStation?.images?.[1] || thisTourStation?.images?.[0] || 'default.jpg'}`}
                             alt={thisTourStation?.name}
                             className="w-10rem h-10rem border-circle shadow-2"
                             style={{ objectFit: 'cover' }}
@@ -139,7 +149,7 @@ const AllTourStations = (props) => {
                             <div className="flex align-items-center gap-2">
                                 <i className="pi pi-map-marker text-primary" />
                                 <span>
-                                    {thisTourStation?.address? `${thisTourStation.address.street } ${thisTourStation.address.house_number }, ${thisTourStation.address.city} ${thisTourStation.address.neighborhood ? + thisTourStation.address.neighborhood:'' }`: 'אין כתובת'}
+                                    {thisTourStation?.address ? `${thisTourStation.address.street} ${thisTourStation.address.house_number}, ${thisTourStation.address.city} ${thisTourStation.address.neighborhood ? + thisTourStation.address.neighborhood : ''}` : 'אין כתובת'}
                                 </span>
                             </div>
                             {/* דוג׳ לקטגוריה */}
@@ -182,7 +192,30 @@ const AllTourStations = (props) => {
                         </div>
                     </div>
                 </Dialog>
+                     {viewAdd  ?
+                     <div className="card flex flex-column md:flex-row gap-3">
+              <div className="card flex flex-column md:flex-row gap-3">
+            <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
+                </span>
+                <InputText placeholder="Username" />
             </div>
+
+            <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">$</span>
+                <InputNumber placeholder="Price" />
+                <span className="p-inputgroup-addon">.00</span>
+            </div>
+
+            <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">www</span>
+                <InputText placeholder="Website" />
+            </div>
+        </div> </div>:<></>}
+           
+    </div>
+       
         </div>
     );
 }
