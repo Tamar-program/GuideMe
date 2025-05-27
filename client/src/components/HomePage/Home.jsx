@@ -6,16 +6,15 @@ import TourComposer from "./TourComposer";
 import { Galleria } from 'primereact/galleria';
 
 const images = [
-    { itemImageSrc: '/images/img1.jpg', alt: 'ירושלים 1' },
-    { itemImageSrc: '/images/img2.jpg', alt: 'ירושלים 2' },
-    { itemImageSrc: '/images/img3.jpg', alt: 'ירושלים 3' }
+    { itemImageSrc: '/images/cotel.jpg', alt: 'ירושלים 1' },
+    { itemImageSrc: '/images/cotel2.jpg', alt: 'ירושלים 2' },
+    { itemImageSrc: '/images/ishuvYashan.jpg', alt: 'ירושלים 3' }
 ];
 
 const Home = () => {
     return (
         <div>
-
-            <div style={{ maxWidth: '1000px', margin: 'auto', paddingTop: '1rem' }}>
+            <div style={{ maxWidth: '500px', margin: 'auto', paddingTop: '1rem' }}>
                 <Galleria value={images} autoPlay transitionInterval={4000} circular
                     showThumbnails={false} showIndicators style={{ maxHeight: '400px' }}
                     item={(item) => <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', borderRadius: '1rem' }} />} />

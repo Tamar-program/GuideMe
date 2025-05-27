@@ -31,21 +31,10 @@ const getTourById = async (req, res) => {
 // Function to create a new tour
 const createTour = async (req, res) => {
     try {
-        console.log("hello");
-        
         const { _id, stations, estimatedDuration, estimatedPrice, tourStyle } = req.body
-        // if (!email || !password) {
-        //   res.status(400).json({ msg: "All fields are required." })
-        // }
         console.log(estimatedDuration, tourStyle)
-        const existingUser = await User.findOne({ _id });
-        console.log(existingUser)
-        if (existingUser) {
-            return res.status(400).json({ message: 'Tour already exists.' });
-        }
         const newTour = await Tour.create({ stations, estimatedDuration, estimatedPrice, tourStyle });
-        const result = await Tour.find()
-        res.status(200).json({ result })
+        res.status(200).json({ newTour })
 
     } catch (error) {
         res.status(500).json({ error: 'Error creating a new tour' });

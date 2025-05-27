@@ -20,8 +20,8 @@ const MenuBar = () => {
 
     const items = [
         { label: 'בית', icon: 'pi pi-home', command: () => navigate("/") },
-        { label: 'אתרי סיור', icon: 'pi pi-map-marker', command: () => navigate("/TouristSites") },
-        { label: 'מסלולים מנצחים', icon: 'pi pi-star', command: () => navigate("/WinningRoutes") },
+        { label: 'האתרים שלנו', icon: 'pi pi-map-marker', command: () => navigate("/TouristSites") },
+        { label: 'מסלולים מנצחים', icon: 'pi pi-trophy', command: () => navigate("/WinningRoutes") },
         { label: 'מועדפים', icon: 'pi pi-heart', command: () => navigate("/FavoritesTours") }
     ];
 
@@ -41,26 +41,3 @@ const MenuBar = () => {
 };
 
 export default MenuBar;
-        }
-    ];
-    const end = (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Login />
-            <Register />
-            <Button onClick={() => { logOutButton() }}>  logOut</Button>
-        </div>
-    )
-    const logOutButton = () => {
-        dispatch(logOut())
-        navigate('/login')
-    }
-
-    return (
-        <>
-            <div className="card">
-                <Menubar model={items} end={end} />
-            </div></>
-    );
-}
-
-export default MyMenuBar;

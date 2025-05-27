@@ -38,51 +38,51 @@ const FoundTours = (props) => {
             </div>
         );
     };
+
     const favorite = async (tour) => {
-
+        console.log(user, "user");
+        console.log(tour, "tour");
         try {
-            console.log(user);
-
-            console.log(user._id, "userId");
-            console.log(tour._id, "tour._id");
-            console.log(tour, "tour");
-
-            console.log(tour._id, "tour._id");
-            // setAccessibility(tour.accessibility)
-            // setBudget(tour.budget)
-            // setDuration(tour.duration)
-            // setPublicTransport(tour.publicTransport)
-            // setTourType(tour.tourType)
-        // const { _id, stations, estimatedDuration, estimatedPrice, tourStyle } = req.body
-console.log(user._id);
-console.log(tour.stations);
-console.log(tour.estimatedDuration);
-console.log(tour.estimatedPrice);
-console.log(tour.tourStyle);
-
-
-            const tourResponse = await axios.post('http://localhost:4321/api/tour', { _id:user._id, stations: tour.stations, estimatedDuration: tour.estimatedDuration, estimatedPrice : tour.estimatedPrice, tourStyle: tour.tourStyle
-                // publicTransport: publicTransport,
-                // categories: Array.isArray(tourType) ? tourType.map((type) => type.name) : [],
-                // maxDuration: typeof duration === 'number' ? duration : 0,
-                // maxPrice: typeof budget === 'number' ? budget : 0,
-                // accessibility: accessibility
+            const tourResponse = await axios.post('http://localhost:4321/api/tour', {
+                _id: user._id, stations: tour.stations, estimatedDuration: tour.estimatedDuration,
+                estimatedPrice: tour.estimatedPrice, tourStyle: tour.tourStyle
             });
-            console.log("tourResponse",tourResponse);
-            
-            const response = await axios.post('http://localhost:4321/api/userTours', {
-                userId: user._id
-                , tourId: tour._id
-            });
-            console.log(response)
-            // setResults(response.data)
-            // TourService.setToursResults(response.data);
-            // setVisible(false)
-            // debugger
-            // navigate('/found-tours', { state: { results: response.data } });
+            console.log("tourResponse", tourResponse);
+            const newTourId = tourResponse.data.newTour._id 
+            console.log(newTourId, "newTourId");
+
+            try {
+                const response = await axios.post('http://localhost:4321/api/userTours', {
+                    userId: user._id
+                    , tourId: newTourId
+                });
+                console.log(response);
+                // setResults(response.data)
+                // TourService.setToursResults(response.data);
+                // setVisible(false)
+                // debugger
+                // navigate('/found-tours', { state: { results: response.data } });
+            } catch (error) {
+                console.error('Error add tour for favorite:', error);
+            }
         } catch (error) {
-            console.error('Error searching for tours:', error);
+            console.error('Error create tour:', error);
         }
+
+        // try {
+        //     const response = await axios.post('http://localhost:4321/api/userTours', {
+        //         userId: user._id
+        //         , tourId: tour._id
+        //     });
+        //     console.log(response)
+        //     // setResults(response.data)
+        //     // TourService.setToursResults(response.data);
+        //     // setVisible(false)
+        //     // debugger
+        //     // navigate('/found-tours', { state: { results: response.data } });
+        // } catch (error) {
+        //     console.error('Error add tour for favorite:', error);
+        // }
     }
     const itemTemplate = (tour, index) => {
         return (
