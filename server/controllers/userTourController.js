@@ -8,8 +8,15 @@ const getAllUserTours = async (req, res) => {
        
         const userTours = await UserTour.find()
             .populate('userId', 'name email') // Populate user details
-            .populate('tourId', 'tourStyle estimatedDuration estimatedPrice'); // Populate tour details
-        res.status(200).json(UserTour);
+            .populate({
+                path: 'tourId',
+                select: 'tourStyle estimatedDuration estimatedPrice stations',
+                populate: {
+                    path: 'stations',
+                    model: 'TourStation' // ודא שזה שם המודל שלך
+                }
+            });
+        res.status(200).json(userTours);
     } catch (error) {
         res.status(500).json({ error: 'Error retrieving user tours' });
     }

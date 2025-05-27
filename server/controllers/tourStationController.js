@@ -7,9 +7,9 @@ const getAllStations = async (req, res) => {
         if (!stations) {
             return res.status(404).json({ error: 'No tours' });
         }
-        res.status(200).json(stations);
+       return res.status(200).json(stations);
     } catch (error) {
-        res.status(500).json({ error: 'Error retrieving stations' });
+      return  res.status(500).json({ error: 'Error retrieving stations' });
     }
 };
 
@@ -27,7 +27,7 @@ const getStationById = async (req, res) => {
         }
         res.status(200).json(station);
     } catch (error) {
-        res.status(500).json({ error: 'Error retrieving the station' });
+       return res.status(500).json({ error: 'Error retrieving the station' });
     }
 };
 
@@ -74,7 +74,7 @@ const updateStation = async (req, res) => {
         }
         res.status(200).json(updatedStation);
     } catch (error) {
-        res.status(500).json({ error: 'Error updating the station' });
+       return res.status(500).json({ error: 'Error updating the station' });
     }
 };
 
@@ -89,9 +89,9 @@ const deleteStation = async (req, res) => {
         if (!deletedStation) {
             return res.status(404).json({ error: 'Station not found' });
         }
-        res.status(200).json({ message: `Station with ID ${id} was successfully deleted` });
+       return res.status(200).json({ message: `Station with ID ${id} was successfully deleted` });
     } catch (error) {
-        res.status(500).json({ error: 'Error deleting the station' });
+       return res.status(500).json({ error: 'Error deleting the station' });
     }
 };
 
