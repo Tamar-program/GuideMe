@@ -73,7 +73,7 @@ function App() {
       {role == "Admin" ? <MyMenuBar /> : role == "User" ? <MyMenuBar /> : <MyMenuBar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/TouristSites" element={<AllTourStations tourStations={tourStations} />} />
+        <Route path="/TouristSites" element={<AllTourStations  />} />
         <Route path="/login" element={<Login />} />
         <Route path="/FavoritesTours" element={<AllFavoritesTours />} />
         <Route path="/WinningRoutes" element={<WinTours usersTours={usersTours} />} />

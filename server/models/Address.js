@@ -12,10 +12,10 @@ const addressSchema = new mongoose.Schema({
     house_number: {
         type: Number
     },
-    landmark: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TourStation'
-    }],
+    // landmark: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'TourStation'
+    // }],
     region: {
         type: String,
         required: true

@@ -64,6 +64,7 @@ const ThisTour = (props) => {
               className="p-button-outlined p-button-secondary"
               onClick={() => props.onStationClick && props.onStationClick(station)}
             />
+            <Button icon="pi pi-trush" rounded severity="danger" aria-label="Cancel" />
           </div>
         </div>
       </div>
