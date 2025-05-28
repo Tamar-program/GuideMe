@@ -18,12 +18,6 @@ const FoundTours = (props) => {
     const location = useLocation();
     const [sortOrder, setSortOrder] = useState(0);
     const [sortField, setSortField] = useState('');
-
-    // const [duration, setDuration] = useState(25);
-    // const [tourType, setTourType] = useState([""]);
-    // const [accessibility, setAccessibility] = useState(false);
-    // const [budget, setBudget] = useState(50);
-    // const [publicTransport, setPublicTransport] = useState(false);
     const results = location.state?.results || [];
     const [tours, setTours] = useState(props ? props.topTours : results);
 
@@ -31,13 +25,12 @@ const FoundTours = (props) => {
         setTours(results);
     }, [results]);
 
-    const header = () => {
-        return (
-            <div className="flex justify-content-end">
-                {/* <Dropdown options={sortOptions} value={sortKey} optionLabel="label" placeholder="Sort By ABC" onChange={onSortChange} className="w-full sm:w-14rem" />; */}
-            </div>
-        );
-    };
+    // const header = () => {
+    //     return (
+    //         <div className="flex justify-content-end">
+    //         </div>
+    //     );
+    // };
 
     const favorite = async (tour) => {
         console.log(user, "user");
@@ -57,11 +50,6 @@ const FoundTours = (props) => {
                     , tourId: newTourId
                 });
                 console.log(response);
-                // setResults(response.data)
-                // TourService.setToursResults(response.data);
-                // setVisible(false)
-                // debugger
-                // navigate('/found-tours', { state: { results: response.data } });
             } catch (error) {
                 console.error('Error add tour for favorite:', error);
             }
@@ -69,21 +57,31 @@ const FoundTours = (props) => {
             console.error('Error create tour:', error);
         }
 
-        // try {
-        //     const response = await axios.post('http://localhost:4321/api/userTours', {
-        //         userId: user._id
-        //         , tourId: tour._id
-        //     });
-        //     console.log(response)
-        //     // setResults(response.data)
-        //     // TourService.setToursResults(response.data);
-        //     // setVisible(false)
-        //     // debugger
-        //     // navigate('/found-tours', { state: { results: response.data } });
-        // } catch (error) {
-        //     console.error('Error add tour for favorite:', error);
-        // }
     }
+
+    const startTour = async (tour) => {
+    try {
+        const tourResponse = await axios.post('http://localhost:4321/api/tour', {
+            _id: user._id,
+            stations: tour.stations,
+            estimatedDuration: tour.estimatedDuration,
+            estimatedPrice: tour.estimatedPrice,
+            tourStyle: tour.tourStyle
+        });
+
+        const newTourId = tourResponse.data.newTour._id;
+
+        await axios.post('http://localhost:4321/api/userTours', {
+            userId: user._id,
+            tourId: newTourId
+        });
+
+        window.location.href = `/tour/stepper/${newTourId}`;
+    } catch (error) {
+        console.error('Error starting tour:', error);
+    }
+};
+
     const itemTemplate = (tour, index) => {
         return (
             <div className="col-12" key={tour._id}>
@@ -104,6 +102,7 @@ const FoundTours = (props) => {
                         <div className="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
                             <span className="text-2xl font-semibold">₪{tour.estimatedPrice}</span>
                             <Button icon="pi pi-heart" className="p-button-rounded" onClick={() => favorite(tour)}></Button>
+                            <Button icon="pi pi-play" label="התחל במסלול" className="p-button-success p-button-rounded" onClick={() => startTour(tour)} />
                             {/* disabled={tour.inventoryStatus === 'OUTOFSTOCK'} */}
                         </div>
                     </div>
@@ -120,10 +119,10 @@ const FoundTours = (props) => {
         });
         return <div className="grid grid-nogutter">{list}</div>;
     };
-
+// header={header()}
     return (
         <div className="card">
-            <DataView value={tours} listTemplate={listTemplate} header={header()} sortField={sortField} sortOrder={sortOrder} />
+            <DataView value={tours} listTemplate={listTemplate} sortField={sortField} sortOrder={sortOrder} />
         </div>
     )
 };

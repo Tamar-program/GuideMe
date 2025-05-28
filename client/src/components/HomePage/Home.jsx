@@ -1,31 +1,36 @@
 // קובץ: Home.jsx
 
 import React from "react";
-import MenuBar from "./MenuBar";
+import MenuBar from "../MenuBar/MenuBar";
 import TourComposer from "./TourComposer";
 import { Galleria } from 'primereact/galleria';
 
 const images = [
-    { itemImageSrc: '/images/cotel.jpg', alt: 'ירושלים 1' },
-    { itemImageSrc: '/images/cotel2.jpg', alt: 'ירושלים 2' },
-    { itemImageSrc: '/images/ishuvYashan.jpg', alt: 'ירושלים 3' }
+    { itemImageSrc: '/images/img1.jpg', alt: 'ירושלים 1' },
+    { itemImageSrc: '/images/img2.jpg', alt: 'ירושלים 2' },
+    { itemImageSrc: '/images/img3.jpg', alt: 'ירושלים 3' }
+    // { itemImageSrc: '/images/cotel.jpg', alt: 'ירושלים 1' },
+    // { itemImageSrc: '/images/cotel2.jpg', alt: 'ירושלים 2' },
+    // { itemImageSrc: '/images/ishuvYashan.jpg', alt: 'ירושלים 3' }
 ];
 
 const Home = () => {
     return (
-        <div>
-            <div style={{ maxWidth: '500px', margin: 'auto', paddingTop: '1rem' }}>
-                <Galleria value={images} autoPlay transitionInterval={4000} circular
-                    showThumbnails={false} showIndicators style={{ maxHeight: '400px' }}
-                    item={(item) => <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', borderRadius: '1rem' }} />} />
-            </div>
 
+        <div>
             <section style={{ backgroundColor: "#fffaf0", padding: "4rem 1rem", textAlign: "center" }}>
                 <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#444" }}>ברוכים הבאים לסיורים בירושלים</h1>
                 <p style={{ fontSize: "1.25rem", maxWidth: "700px", margin: "1rem auto", color: "#666" }}>
                     מערכת מתקדמת לבניית מסלולי סיור אישיים – חוויה ירושלמית אמיתית
                 </p>
             </section>
+            <div style={{ maxWidth: '500px', margin: 'auto', paddingTop: '1rem' }}>
+                <Galleria value={images} autoPlay transitionInterval={4000} circular
+                    showThumbnails={false} showIndicators style={{ maxHeight: '400px' }}
+                    item={(item) => <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', borderRadius: '1rem' }} />} />
+            </div>
+
+
 
             <section style={{ backgroundColor: "#f0f4f8", padding: "3rem 1rem" }}>
                 <div style={{ maxWidth: "900px", margin: "auto", fontSize: "1.1rem", color: "#444" }}>

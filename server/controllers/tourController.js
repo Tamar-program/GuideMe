@@ -18,7 +18,7 @@ const getAllTours = async (req, res) => {
 const getTourById = async (req, res) => {
     try {
         const { id } = req.params;
-        const tour = await Tour.findById(id);
+        const tour = await Tour.findById(id).populate('stations');
         if (!tour) {
             return res.status(404).json({ error: 'Tour not found' });
         }

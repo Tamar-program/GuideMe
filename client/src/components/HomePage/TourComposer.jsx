@@ -106,9 +106,10 @@ const TourComposer = () => {
                                 </div>
                             </div>
                             <p className="duration-text">
-                                <span>{Math.floor(duration || 0)} שעות</span> ו-
-                                <span>{Math.round(((duration || 0) % 1) * 60)} דקות</span>
+                                <span>{Math.floor(duration / 60)} שעות</span> ו-
+                                <span>{Math.round(duration % 60)} דקות</span>
                             </p>
+
                         </div>
                         <div className="form-field">
                             <label htmlFor="tourType" className="text-primary-50 font-semibold">סוג סיור</label>

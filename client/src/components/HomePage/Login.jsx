@@ -3,7 +3,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from "primereact/inputtext";
 import axios from 'axios';
-import { setToken, setUser,setRole } from '../../redux/tokenSlice';
+import { setToken, setUser, setRole } from '../../redux/tokenSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
@@ -11,12 +11,38 @@ const Login = () => {
     const [visible, setVisible] = useState(false);
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
+
     const Log_In = async () => {
-        const { data } = await axios.post('http://localhost:4321/api/auth/login', { email: email, password: password })
-        dispatch(setUser(data.user));
-        dispatch(setRole(data.role));
-        dispatch(setToken(data.accessToken));
+        try {
+            // Send login request to the backend with email and password
+            const { data } = await axios.post('http://localhost:4321/api/auth/login', {
+                email: email,
+                password: password
+            });
+
+            // Dispatch user data to the Redux store
+            dispatch(setUser(data.user));
+            dispatch(setRole(data.role));
+            dispatch(setToken(data.accessToken));
+
+        } catch (error) {
+            // Handle errors from the login request
+            if (error.response) {
+                // The request was made and the server responded with a status code outside the 2xx range
+                console.error('Login failed:', error.response.data.message);
+                alert(`Login failed: ${error.response.data.message}`);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('No response from server:', error.request);
+                alert('No response from server. Please try again later.');
+            } else {
+                // Something happened in setting up the request that triggered an error
+                console.error('Login error:', error.message);
+                alert('Login error: Please try again.');
+            }
+        }
     }
+
     return (
         <div className="card flex justify-content-center">
             <Button label="כניסה כמשתמש רשום" icon="pi pi-user" onClick={() => setVisible(true)} />

@@ -1,23 +1,24 @@
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import 'leaflet/dist/leaflet.css';
 import './App.css';
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { Route, Routes } from "react-router-dom";
 import Home from './components/HomePage/Home';
-import AllTourStations from './components/TouristSites/AllTourStations';
-import { useDispatch, useSelector } from 'react-redux';
+import AllTourStations from './components/MenuBar/AllTourStations';
+import { useSelector } from 'react-redux';
 import Login from './components/HomePage/Login';
-import MyMenuBar from './components/HomePage/MenuBar';
+import MyMenuBar from './components/MenuBar/MenuBar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import FoundTours from './components/FindTours/FoundTours';
+import TourStepper from "./components/StartTour/TourStepper";
+import AllUsers from "./components/MenuBar/AllUsers";
 
 function App() {
-
+  const { token, role, user } = useSelector((state) => state.token);
   const [tourStations, setTourStations] = useState([]);
   const [tours, setTours] = useState([]);
-  // const [usersTours, setUserTours] = useState([]);
 
   const getAllTourStations = async () => {
     try {
@@ -48,19 +49,19 @@ function App() {
   useEffect(() => {
     getAllTourStations()
     getAllTours()
-    // getAllUsersTours()
   }, []);
-
-  const { token, role, user } = useSelector((state) => state.token);
 
   return (
     <div className="App">
       {role == "Admin" ? <MyMenuBar /> : role == "User" ? <MyMenuBar /> : <MyMenuBar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/TouristSites" element={<AllTourStations />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/tourist-sites" element={<AllTourStations />} />
+        <Route path="/all-users" element={<AllUsers />} />
         <Route path="/login" element={<Login />} />
         <Route path="/found-tours" element={<FoundTours />} />
+        <Route path="/tour/stepper/:tourId" element={<TourStepper />} />
       </Routes>
     </div>
   );
