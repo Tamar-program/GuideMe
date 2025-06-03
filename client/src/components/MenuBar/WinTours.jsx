@@ -7,13 +7,12 @@ const WinTours = (props) => {
 
     const toursMap = {};
     usersTours.forEach(tour => {
-        const key = tour.tourId._id; // זה תמיד סטרינג
+        const key = tour.tourId._id;
         if (!toursMap[key]) {
             toursMap[key] = [];
         }
         toursMap[key].push(tour);
     });
-
 
     console.log("toursMap:", toursMap);
 
@@ -22,8 +21,6 @@ const WinTours = (props) => {
     );
 
     const quarterLength = Math.ceil(sortedTours.length / 4);
-
-    // מערך רגיל של מסלולים (הראשון מכל קבוצה)
     let topTours = sortedTours.slice(0, quarterLength).map(([tourId, toursArr]) => toursArr[0].tourId);
 
     if (topTours.length === 0) {
@@ -34,4 +31,5 @@ const WinTours = (props) => {
       <FoundTours topTours={topTours}/>
     );
 }
+
 export default WinTours;

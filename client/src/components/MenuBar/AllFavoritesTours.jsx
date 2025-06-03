@@ -11,16 +11,17 @@ const AllFavoritesTours = () => {
     const [userTours, setUserTours] = useState([]);
     const { user } = useSelector((state) => state.token);
     // const navigate = useNavigate();
-     const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
 
     const userId = user?._id;
 
     const getAllUsersTours = async () => {
         try {
             const { data } = await axios.get(`http://localhost:4321/api/userTours/${userId}`);
-            setUserTours(data || []);
+            setUserTours(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error fetching tours:', error);
+            setUserTours([]);
         }
     };
 
@@ -32,7 +33,11 @@ const AllFavoritesTours = () => {
         <div className="flex flex-column align-items-center justify-content-center">
             <h1 className="text-2xl font-bold mb-4">הסיורים שלי</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-                {userTours.length === 0 && <div>לא נמצאו סיורים</div>}
+                {userTours.length === 0 && (
+                    <div className="w-full flex justify-content-center items-center text-xl text-gray-500" style={{ minHeight: "100px" }}>
+                        לא נמצאו סיורים
+                    </div>
+                )}
                 {userTours?.map((tour) => (
                     <Card
                         key={tour._id}
@@ -59,7 +64,7 @@ const AllFavoritesTours = () => {
                                 
                             }}
                         /> */}
-                        
+
                         <ThisTour stations={tour.tourId?.stations || []} />
                         <div className="flex justify-content-end">
                             <Button
@@ -74,7 +79,7 @@ const AllFavoritesTours = () => {
                                     }
                                 }}
                             />
-                        </div>                  
+                        </div>
                     </Card>
                 ))}
             </div>

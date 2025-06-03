@@ -3,9 +3,9 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'leaflet/dist/leaflet.css';
 import './App.css';
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+// import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import AllFavoritesTours from './components/MenuBar/AllFavoritesTours';
-import WinTours from './components/WinTours/WinTours';
+import WinTours from './components/MenuBar/WinTours';
 import { Route, Routes } from "react-router-dom";
 import Home from './components/HomePage/Home';
 import AllTourStations from './components/MenuBar/AllTourStations';
@@ -53,26 +53,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    getAllTourStations()
-    getAllTours()
-    getAllUsersTours()
-  }, []);
-
- 
-  // const getAllTourStations = async () => {
-  //   try {
-  //     const data = await axios.get('http://localhost:4321/api/tourStation');
-  //     if (!data.data) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     setTourStations(data.data);
-  //   }
-  //   catch (error) {
-  //     console.error('Error fetching tour stations:', error);
-  //   }
-  // };
-
   const getAllTours = async () => {
     try {
       const data = await axios.get('http://localhost:4321/api/tour');
@@ -86,18 +66,17 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   getAllTourStations()
-  //   getAllTours()
-  // }, []);
+  useEffect(() => {
+    getAllTourStations()
+    getAllTours()
+    getAllUsersTours()
+  }, []);
 
   return (
     <div className="App">
       {role == "Admin" ? <MyMenuBar /> : role == "User" ? <MyMenuBar /> : <MyMenuBar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/TouristSites" element={<AllTourStations  />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/FavoritesTours" element={<AllFavoritesTours />} />
         <Route path="/WinningRoutes" element={<WinTours usersTours={usersTours} />} />
         <Route path="/home" element={<Home />} />
