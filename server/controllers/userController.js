@@ -2,16 +2,18 @@ const User = require("../models/User")
 
 // Function to retrieve all users
 const getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find().lean().select('password')
-    res.status(200).json(users)
-    console.log(req.user)
-  }
-  catch (error) {
-    console.error(error)
-    res.status(500).json({ msg: "Server error, Unable to fetch users" })
-  }
-}
+    try {
+        const users = await User.find().select('name email'); // Only return name & email
+        if (!users || users.length === 0) {
+            return res.status(404).json({ error: 'No users found' });
+        }
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error retrieving users' });
+    }
+};
+
 
 // Function to create a new user
 const createUser = async (req, res) => {

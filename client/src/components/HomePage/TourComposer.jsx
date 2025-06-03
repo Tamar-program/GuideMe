@@ -63,17 +63,49 @@ const TourComposer = () => {
                 accessibility: accessibility
             });
             console.log(response)
-            setResults(response.data)
-            TourService.setToursResults(response.data);
-            setVisible(false)
-            // debugger
-            navigate('/found-tours', { state: { results: response.data} });
+            // let totalPrice = 0;
+            // let totalDuration = 0;
+
+            // for (let j = 0; j < response.data.totalStations; j++) {
+            //     const station = response.data.matchedStations[j];
+
+            //     if (isNaN(station.price) || isNaN(station.duration)) {
+            //         console.error(`Invalid station data:`, station);
+            //         continue;
+            //     }
+
+            //     if (totalPrice + station.price > budget || totalDuration + station.duration > duration) {
+            //         if (response.data.tourStations.length > 1) {
+            //             const tour = {
+            //                 stations: response.data.tourStations,
+            //                 estimatedDuration: totalDuration,
+            //                 estimatedPrice: {
+            //                     min: totalPrice,
+            //                     max: totalPrice
+            //                 },
+            //                 tourStyle: response.data.tourStyleValue
+            //             };
+
+            //             console.log('Matching tour:', tour);
+            //             response.data.matchingTours.push(tour);
+            //         }
+            //         break;
+            //     }
+
+            //     response.data.tourStations.push(station._id);
+            //     totalPrice += station.price;
+            //     totalDuration += station.duration;
+            // }
+
+            // console.log('תוצאות חיפוש:', response.data.matchingTours);
+            // setVisible(false);
         } catch (error) {
             console.error('Error searching for tours:', error);
         }
     };
 
-    return (<>
+    return (
+        <>
             <div className="card flex justify-content-center">
                 <Button
                     label="הרכב סיור"
@@ -99,7 +131,7 @@ const TourComposer = () => {
                                             value={typeof duration === 'number' ? duration : 0}
                                             onChange={(e) => setDuration(typeof e.value === 'number' ? e.value : 0)}
                                             min={0}
-                                            max={1200}
+                                            max={10}
                                             step={0.25}
                                             className="w-14rem"
                                         />
